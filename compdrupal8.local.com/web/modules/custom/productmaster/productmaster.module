@@ -1,0 +1,49 @@
+<?php
+
+
+function productmaster_array() {
+  return array(
+//    'productlist' => array(
+//      'title' => 'List Of Products',
+//      'route_name' => 'productmaster_list',
+//    ),
+    'product/new' => array(
+      'title' => 'Add Product',
+      'route_name' => 'productmaster_add',
+    ),
+    'product/edit/%' => array(
+      'title' => 'Edit Product',
+      'route_name' => 'productmaster_add',
+    ),
+//    'product/delete/%' => array(
+//      'title' => 'Delete Product',
+//      'route_name' => 'productmaster_delete',
+//    ),
+  );
+}
+
+function productmaster_permission() {
+  return array(
+    'display product' => array(
+      'title' => t('Display Products list'),
+    ),
+    'add product' => array(
+      'title' => t('Add new product'),
+    ),
+    'edit product' => array(
+      'title' => t('Edit product'),
+    ),
+    'delete product' => array(
+      'title' => t('Delete product'),
+    ),
+  );
+}
+
+
+function productmaster_theme($existing, $type, $theme, $path) {
+  return array(
+    'slabtheme' => array(
+      'variables' => array('slab_var' => NULL),
+    ),
+  );
+}

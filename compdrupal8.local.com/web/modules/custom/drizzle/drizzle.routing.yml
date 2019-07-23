@@ -1,0 +1,44 @@
+drizzle.settings:
+  path: '/drizzle/global-settings'
+  defaults: 
+   _form: '\Drupal\drizzle\Form\BasicSettingsForm'
+   _title: 'Global Variables settings'
+  requirements:
+    _permission: 'access content'  
+
+drizzle.drizzlemenu:
+  path: '/drizzlemenu'
+  defaults: 
+   _controller: '\Drupal\drizzle\Controller\DrizzleController::drizzlelist'
+   _title: 'Drizzle Users List'
+  requirements:
+    _permission: 'display drizzle'      
+    
+drizzle.drizzleadd:
+  path: '/drizzle/new'
+  defaults:
+    _form: '\Drupal\drizzle\Form\DrizzleUser'
+    _title: 'Drizzle new user'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+drizzle.drizzleedit:
+  path: '/drizzle/edit/{tpk}'
+  defaults: 
+    _form: '\Drupal\drizzle\Form\DrizzleUser'
+    _title: 'Edit Drizzle User'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+drizzle.drizzledisplay:
+  path: '/drizzle/display/{tpk}'
+  defaults: 
+    _form: '\Drupal\drizzle\Form\DrizzleUser'
+    _title: 'Display Users'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'      
+    
+    

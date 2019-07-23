@@ -1,0 +1,77 @@
+input.form-submit.button-small {
+    padding: 4px 8px;
+    font-weight: bold;
+}
+
+.container-inline input.form-submit.button-small + .ajax-progress.ajax-progress-throbber .throbber {
+    position: absolute;
+    left: 19px;
+    margin-top: 7px;
+}
+
+.container-inline input.form-submit.button-small + .ajax-progress.ajax-progress-throbber .message {
+    display: none;
+}
+th{
+    /*    background-color: #E1E5EC !important;
+        color : #000 !important;*/
+}
+
+.dataTable th {
+    background-color: #40b2cd;
+    color: #fff;
+}
+tr.odd td.sorting_1{
+    background-color: #fff !important;
+}
+.table>tbody>tr>td{
+    vertical-align: middle !important;
+    padding: 0px 8px !important;
+}
+.content-wrapper{
+    background-color: #fff !important;
+}
+.content-wrapper .table-wrapper {
+    background: #fff;
+    padding: 0px 25px 20px 0px;
+    margin: 0px auto 20px auto;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+    color: #000;
+    /*    background: #40b2cd;
+        padding: 6px 25px;
+        margin: -20px -25px -20px;
+        border-radius: 3px 3px 0 0;*/
+}
+
+.item-table-title {
+    color: #fff;
+    background: #40b2cd;
+    padding: 8px 25px 30px;
+    margin: 20px 0px 12px;
+    border-radius: 3px 3px 0 0;
+}
+.table-title h2 {
+    margin: 5px 0 0;
+    font-size: 22px;
+} 
+.button, .image-button{
+    margin-right: 0em !important;
+    margin-left: 0em !important;
+}
+.container-inline {
+    border: 1px solid #ccc;
+}
+#items-wrapper{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.vertical-tabs__menu-item.is-selected {
+    width: 101%;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled]{
+    border: 0px;
+    background-color: #fff !important;
+}

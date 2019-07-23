@@ -1,0 +1,5 @@
+name: My Module Add Functionalities
+description: Functionalities Checking Module
+type: module
+core: 8.x
+

@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Default theme implementation for page titles.
+ *
+ * Available variables:
+ * - title_attributes: HTML attributes for the page title element.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title: The page title, for use in the actual content.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'content',
+    'node',
+    'custom',
+  ]
+%}
+
+{{ title_prefix }}
+{% if title %}
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">{{ title }}</h3>
+        </div>
+    </div>
+{% endif %}
+{{ title_suffix }}

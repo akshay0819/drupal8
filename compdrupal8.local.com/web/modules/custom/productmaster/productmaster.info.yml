@@ -1,0 +1,5 @@
+name: Product Master 
+description: 'Add and Manage Products'
+type: module
+core: 8.x
+package: Master Modules

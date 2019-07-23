@@ -1,0 +1,5 @@
+name: Comments Module API
+description: Comments API Module for users
+type: module
+core: 8.x
+

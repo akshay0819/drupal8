@@ -1,0 +1,14 @@
+first_module.content:
+  path: '/test-page-mail'
+  defaults:
+    _form: 'Drupal\first_module\Form\FirstController'
+  requirements:
+    _permission: 'access content'
+
+first_module.test_page_print:
+  path: '/test-page-print'
+  defaults:
+    _controller: 'Drupal\first_module\Controller\FirstModulePrint::test_page_print'
+    _title: 'Test Page Print!'
+  requirements:
+    _permission: 'access content'    

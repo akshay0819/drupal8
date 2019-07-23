@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_events.module.
+ */
+
+use Drupal\drizzle\Event\UserLoginEvent;
+
+/**
+ * Implements hook_user_login().
+ */
+function drizzle_user_login($account) {
+     //drupal_set_message('Deleted config: ' . $config->getName());
+  // Instantiate our event.
+  $event = new UserLoginEvent($account);
+
+  // Get the event_dispatcher server and dispatch the event.
+  $event_dispatcher = \Drupal::service('event_dispatcher');
+  $event_dispatcher->dispatch(UserLoginEvent::EVENT_NAME, $event);
+}
+
+function drizzle_permission() {
+  return array(
+    'new drizzle' => array(
+      'title' => t('Add new Drizzle user'),
+    ),
+    'edit drizzle' => array(
+      'title' => t('Edit Drizzle User'),
+    ),
+    'display drizzle' => array(
+      'title' => t('Display users'),
+    )
+  );
+}

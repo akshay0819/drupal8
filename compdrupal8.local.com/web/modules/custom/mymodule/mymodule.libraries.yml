@@ -1,0 +1,11 @@
+mymodule.lib:
+  version: 1.x
+  css:
+    base:
+      css/mymodule.css: {}
+      /libraries/datatables/media/css/demo_table.css: {}
+      
+  js:
+    js/mymodule.js: {}
+    /libraries/datatables/media/js/jquery.dataTables.js: {}
+    /modules/contrib/datatables/js/datatables.js: {}

@@ -1,0 +1,5 @@
+name: Drizzle Module
+type: module
+description: Custom/Example event work.
+core: 8.x
+package: Custom

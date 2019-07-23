@@ -1,0 +1,52 @@
+mymodule_addcompany:
+  path: '/add_company'
+  defaults: 
+   _form: 'Drupal\mymodule\Addcompanies'
+   _title: 'Add Company and Details'
+   formmode: 'NEW'
+  requirements:
+   _permission: 'access content'
+   
+mymodule_editcompany:
+  path: '/add_company/edit/{companypk}'
+  defaults: 
+   _form: 'Drupal\mymodule\Addcompanies'
+   _title: 'Edit Company and Details'
+   formmode: 'EDIT'   
+  requirements:
+   _permission: 'access content'   
+    
+mymodule_display: 
+  path: '/add_company/display/{companypk}'
+  defaults: 
+    _form: '\Drupal\mymodule\Addcompanies'
+    _title: 'Display Company'
+    formmode: 'DISPLAY'
+  requirements:  
+     _permission: 'access content'    
+    
+mymodule_delete:
+  path: '/add_company/delete/{companypk}'
+  defaults:
+    _form: '\Drupal\mymodule\Form\ConfirmDeleteForm'
+    _title: 'Confirm Deletion'
+  requirements:
+     _permission: 'access content'
+#    id: ^\d+$    
+    
+mymodule_company_list:
+  path: '/companylist'
+  defaults: 
+    _controller: '\Drupal\mymodule\Controller\CompanyList::companieslist'
+  requirements: 
+     _permission: 'access content'    
+    
+ajax_example.form:
+  path: '/admin/ajax_example'
+  defaults:
+    _form: 'Drupal\mymodule\AdditemMore3'
+    _title: 'Ajax Example'
+  requirements:
+    _permission: 'access administration pages'
+    
+    

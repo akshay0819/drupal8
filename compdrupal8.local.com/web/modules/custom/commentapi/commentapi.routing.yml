@@ -1,0 +1,39 @@
+commentapi.comment:
+  path: '/mycomments'
+  defaults: 
+   _form: 'Drupal\commentapi\Form\CommentsModule'
+   _title: 'Comments'
+  requirements:
+   _permission: 'access content'
+
+commentapi.testajx:
+  path: '/testajax'
+  defaults: 
+   _form: 'Drupal\commentapi\Form\TestAjax'
+   _title: 'Test Ajax'
+  requirements:
+   _permission: 'access content'   
+
+commentapi.testfile:
+  path: '/test-file-upload'
+  defaults: 
+   _form: 'Drupal\commentapi\Form\AddBannerForm'
+   _title: 'File Upload'
+  requirements:
+   _permission: 'access content'     
+
+commentapi.attachmentfile:
+  path: '/attachments'
+  defaults: 
+   _form: 'Drupal\commentapi\Form\Attachments'
+   _title: 'Attachments'
+  requirements:
+   _permission: 'access content'     
+
+commentapi.testdialog:
+  path: '/test-dialog'
+  defaults: 
+   _form: 'Drupal\commentapi\Form\ModalTestForm'
+   _title: 'test dialog'
+  requirements:
+   _permission: 'access content'      

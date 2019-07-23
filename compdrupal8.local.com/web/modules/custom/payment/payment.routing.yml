@@ -1,0 +1,7 @@
+payment_makepayment:
+  path: '/payment'
+  defaults: 
+    _form: 'Drupal\payment\Form\PaymentForm'
+    _title: 'Payment'
+  requirements:
+    _permission: 'access content'

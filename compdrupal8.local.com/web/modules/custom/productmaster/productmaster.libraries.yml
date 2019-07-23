@@ -1,0 +1,12 @@
+productmasterlib:
+  version: 1.x
+  css:
+    base:
+      css/productmaster.css: {}
+      # /libraries/datatables/media/css/demo_table.css: {}
+      
+  js: 
+    js/productmaster.js: {}
+    /libraries/datatables/media/js/jquery.dataTables.js: {}
+    /modules/contrib/datatables/js/datatables.js: {}
+      

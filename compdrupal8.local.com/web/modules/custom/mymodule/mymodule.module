@@ -1,0 +1,20 @@
+<?php
+
+
+
+function mymodule_permission() {
+  return array(
+    'display company' => array(
+      'title' => t('Display Company list'),
+    ),
+    'add company' => array(
+      'title' => t('Add new company'),
+    ),
+    'edit company' => array(
+      'title' => t('Edit company'),
+    ),
+    'delete company' => array(
+      'title' => t('Delete company'),
+    ),
+  );
+}

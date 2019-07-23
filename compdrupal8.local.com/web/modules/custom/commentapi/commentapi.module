@@ -1,0 +1,12 @@
+<?php
+
+function commentapi_theme($existing, $type, $theme, $path) {
+  return array('commentsview' =>                  // this is the name of the template
+           array(
+            'variables' => array(
+                'title' => null,
+                'description' => null
+            ),
+        )
+    );
+}

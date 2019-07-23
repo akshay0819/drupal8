@@ -1,0 +1,4 @@
+name: Payment Module
+description: Make Payment and view receipts
+type: module
+core: 8.x

@@ -1,0 +1,40 @@
+<h2>{{ title }}</h2>
+<div class="col-md-12 col-sm-12	">
+<div class="portlet box blue-steel">
+<div class="portlet-title">
+	<div class="caption">
+		<i class="fa fa-bell-o"></i>Recent Comments
+	</div>
+	
+</div>
+<div class="portlet-body">
+<ul class="feeds">
+ {% for hobby in description %}
+<li>
+		<div class="col1">
+			<div class="cont">
+				<div class="cont-col1">
+					<div class="label label-sm label-info">
+						<i class="fa fa-check"></i>
+					</div>
+				</div>
+				<div class="cont-col2">
+					<div class="desc">
+						 {{ hobby.comment }} 
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col2">
+			<div class="date">
+				 Just now
+			</div>
+		</div>
+	</li>
+
+{% endfor %}    
+</ul>
+</div>
+</div>
+</div>

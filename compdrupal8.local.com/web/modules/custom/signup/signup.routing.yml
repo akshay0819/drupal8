@@ -1,0 +1,15 @@
+signup_register:
+   path: '/signup'
+   defaults:
+    _form: 'Drupal\signup\Signup'
+    _title: 'Register User'
+   requirements:
+    _permission: 'access content'
+    
+signup_activation:
+   path: '/signup/activate/{activatelink}'
+   defaults:
+    _form: 'Drupal\signup\SignupActivation'
+    _title: 'Activate User'
+   requirements:
+    _permission: 'access content'    

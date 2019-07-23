@@ -1,0 +1,29 @@
+<?php
+
+function batch_theme($existing, $type, $theme, $path) {
+
+  return [
+    'batchtheme' => [
+//        'variables' =>
+//           [
+//               'templatefields' => NULL,
+//               'form' => NULL
+//           ],
+        'render element' => 'form',
+        'template' => 'my-batch-name',
+    ],
+  ];
+    
+    
+//    return array(
+//        'batchtheme' => array(
+//           'variables' =>
+//                [
+//                    'templatefields' => NULL,
+//                    'form' => NULL
+//                ],
+//            'template' => 'my-batch-name',
+//            'render element' => 'form'
+//        ),
+//    );    
+}

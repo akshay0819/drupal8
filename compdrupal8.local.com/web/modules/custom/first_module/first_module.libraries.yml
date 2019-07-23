@@ -1,0 +1,9 @@
+mail-css:
+  version: 1.x
+  css:
+    layout:
+      css/mail.css: {}
+    theme:
+      css/mail.css: {}
+  js:
+    js/mail.js: {}

@@ -1,0 +1,50 @@
+productmaster_list:
+  path: '/productlist'
+  defaults: 
+    _controller: '\Drupal\productmaster\Controller\ProductController::productslist'
+  requirements: 
+    _permission: 'display productmaster'
+
+productmaster_add: 
+  path: '/product/new'
+  defaults: 
+    _form: '\Drupal\productmaster\AddProduct'
+    _title: 'Create Product'
+    formmode: 'NEW'
+  requirements: 
+    _permission: 'add product'
+
+productmaster_edit: 
+  path: '/product/edit/{id}'
+  defaults: 
+    _form: '\Drupal\productmaster\AddProduct'
+    _title: 'Edit Product'
+    formmode: 'EDIT'
+  requirements:  
+   _permission: 'edit product'
+   
+productmaster_display: 
+  path: '/product/display/{id}'
+  defaults: 
+    _form: '\Drupal\productmaster\AddProduct'
+    _title: 'Display Product'
+    formmode: 'DISPLAY'
+  requirements:  
+   _permission: 'display product'
+
+productmaster_delete: 
+  path: '/product/delete/{id}'
+  defaults: 
+    _form: 'Drupal\productmaster\DeleteProduct'
+    _title: 'Delete Product'
+  requirements: 
+    _permission: 'delete product'
+
+
+productmaster_slab_theme: 
+  path: '/productmastertheme'
+  defaults: 
+    _controller: '\Drupal\productmaster\Controller\ProductmasterTheme'
+    _title: 'Theme Producmaster Slab'
+  requirements:  
+   _permission: 'display product'

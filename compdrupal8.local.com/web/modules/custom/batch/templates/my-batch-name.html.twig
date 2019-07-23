@@ -1,0 +1,75 @@
+{{ form.form_build_id }}
+{{ form.form_token }}
+{{ form.form_id }}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i> Add New Batch {{ form['#myvars'].templatefields }} </div>
+    </div>
+    <div class="portlet-body form">
+
+        <form role="form" class="form-horizontal">
+            <div class="form-body">
+                <div class="row">
+                    <form class="form-horizontal">
+                        <div class="col-md-6">
+                            {{ form.batchno }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.usebydate }}
+                        </div>                    
+                        <div class="col-md-6">
+                            {{ form.productcode }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.netweight }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.batchdate }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.packedweight }}
+                        </div>                    
+                        <div class="col-md-6">
+                            {{ form.packdate }}
+                        </div>	
+
+
+                        <div class="col-md-6">
+                            {{ form.customtemplatepk }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.batchtext  }}
+                        </div>		
+                    </form>	
+                </div>
+
+                <div class="row">
+                                            <div class="col-md-6">{{ dump(form) }}</div>
+
+                    {% for userd in form['#fields']  %}
+                        {% set fid = userd.fcode %}
+                    {% endfor %}   
+
+                    {#                    <div class="col-md-6">
+                                            {{ form.color }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form.red }}
+                                        </div>#}
+                </div>	
+
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        {{ form.submit }}
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        {{ form.actions.next }}
+                    </div>
+                </div>
+
+        </form>
+    </div>
+</div>
+</div>

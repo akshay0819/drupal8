@@ -1,0 +1,57 @@
+batch_example.form:
+  path: '/batch/new'
+  defaults:
+    _form: '\Drupal\batch\Form\BatchForm'
+    _title: 'Batch processing'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+batch_example_edit: 
+  path: '/batch/edit/{batchpk}'
+  defaults: 
+    _form: '\Drupal\batch\Form\BatchForm'
+    _title: 'Edit Batch'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+batch_example_display: 
+  path: '/batch/display/{batchpk}'
+  defaults: 
+    _form: '\Drupal\batch\Form\BatchForm'
+    _title: 'Display Batch'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
+batch_example_delete: 
+  path: '/batch/delete/{batchpk}'
+  defaults: 
+    _form: 'Drupal\BatchForm\Form\DeleteBatch'
+    _title: 'Delete Batch'
+  requirements: 
+    _permission: 'access content'  
+
+batch_example.autocomplete:
+  path: '/batch-product-autocomplete'
+  defaults:
+    _controller: '\Drupal\batch\Controller\AutocompleteController::productAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+    
+batch_example.renderform:
+  path: '/addnewbatch'
+  defaults:
+    _controller: '\Drupal\batch\Controller\AutocompleteController::manageAction'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+batch_example.list:
+  path: '/batchlist'
+  defaults: 
+    _controller: '\Drupal\batch\Controller\BatchController::batchlist'
+  requirements: 
+    _access: 'TRUE'    

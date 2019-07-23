@@ -1,0 +1,14 @@
+services:
+  # Name of this service.
+  my_config_events_subscriber:
+    # Event subscriber class that will listen for the events.
+    class: '\Drupal\drizzle\EventSubscriber\ConfigEventsSubscriber'
+    # Tagged as an event_subscriber to register this subscriber with the event_dispatch service.
+    tags:
+      - { name: 'event_subscriber' }
+
+  # Subscriber to the event we dispatch in hook_user_login.
+  drizzle_user_login:
+    class: '\Drupal\drizzle\EventSubscriber\UserLoginSubscriber'
+    tags:
+      - { name: 'event_subscriber' }

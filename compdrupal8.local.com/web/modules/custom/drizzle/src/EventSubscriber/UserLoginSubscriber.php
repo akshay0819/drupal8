@@ -1,0 +1,72 @@
+<?php
+
+namespace Drupal\drizzle\EventSubscriber;
+
+use Drupal\drizzle\Event\UserLoginEvent;
+use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+
+/**
+ * Class UserLoginSubscriber.
+ *
+ * @package Drupal\custom_events\EventSubscriber
+ */
+class UserLoginSubscriber implements EventSubscriberInterface {
+
+    public static function getSubscribedEvents() {
+
+        //$events[KernelEvents::CONTROLLER][] = array('onLoad');
+        $events[KernelEvents::CONTROLLER][] = array('onLoad');
+
+        return $events;
+    }
+
+    public function onLoad(FilterControllerEvent $event) {
+
+        $config = \Drupal::config('drizzle.settings');
+
+
+        $uid = \Drupal::currentUser()->id();
+        $mail = \Drupal::currentUser()->getEmail();
+
+        $createuser = \Drupal::database()->query("select b.tenant from tfrttenant b,tfrttenantuser a where
+              a.tpk = b.tpk and a.tuname = '" . $mail . "'");
+        $data = $createuser->fetchAssoc();
+
+        if (!empty($data['tenant'])) {
+            $pre_pass = md5($data['tenant']);
+            $p_arr = str_split($pre_pass, 8);
+            $pass = $p_arr['3'] . $p_arr['1'] . $p_arr['2'] . $p_arr['0'];
+        }
+
+
+        if ($uid == 1 || $uid == 0) {
+            $key = 'default';
+        } else {
+            $key = $data['tenant'];
+        }
+        $database = array(
+            'database' => $config->get('dbconnection.database'),
+            'username' => 'anaraj',
+            'password' => 'anaraj21',
+            'prefix' => '',
+            'host' => $config->get('dbconnection.host'),
+            'port' => $config->get('dbconnection.port'),
+            'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+            'driver' => $config->get('dbconnection.driver'),
+        );
+        \Drupal\Core\Database\Database::addConnectionInfo($key, 'default', $database);
+
+        \Drupal\Core\Database\Database::setActiveConnection($key);
+
+        //drupal_flush_all_caches();
+
+        $db = \Drupal\Core\Database\Database::getConnection($key);
+// $query = \Drupal::database()->query( "SELECT CURRENT_USER()" );
+        $query = $db->query("SELECT CURRENT_USER()");
+        $result = $query->fetchAll();
+        // print_r($result);
+    }
+
+}
