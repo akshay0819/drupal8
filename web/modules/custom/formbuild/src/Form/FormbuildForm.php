@@ -118,18 +118,19 @@ class FormbuildForm extends FormBase {
         ];
 
 	$form['apmdfields'] = [
-            '#type' => 'textfield',
+            '#type' => isset($this->display_mode) ? 'textarea' : 'textfield',
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Fields'),
             '#default_value' => ($form_state->getValue('apmdfields') != false) ? $form_state->getValue('apmdfields') : implode(",", json_decode($formbuilddet['apmdfields'], true)),
             '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	    '#maxlength' => 2000,
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 
         
 	$form['aptablefields'] = [
-            '#type' => 'textfield',
+            '#type' => isset($this->display_mode) ? 'textarea' : 'textfield',
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Table Fields'),
             '#default_value' => ($form_state->getValue('aptablefields') != false) ? $form_state->getValue('aptablefields') : implode(",", json_decode($formbuilddet['aptablefields'], true)),
@@ -140,7 +141,7 @@ class FormbuildForm extends FormBase {
 
         
         $form['apkeyfields'] = [
-            '#type' => 'textfield',
+            '#type' => isset($this->display_mode) ? 'textarea' : 'textfield',
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Keys'),
             '#rows' => 2,
