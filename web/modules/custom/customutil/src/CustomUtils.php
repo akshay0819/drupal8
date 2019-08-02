@@ -109,8 +109,10 @@ Class CustomUtils {
                     'btn btn-brand btn-elevate btn-icon-sm ', $class,
                 ),),
         );
-
-        $durl = Url::fromRoute($formroute);
+	if (!empty($id))
+          $durl = Url::fromRoute($formroute, $id);
+	else        
+	  $durl = Url::fromRoute($formroute);
         $durl->setOptions($link_options);
         $link_render_array = array(
             '#title' => array('#markup' => '<i class="la la-plus"></i>' . $txt),

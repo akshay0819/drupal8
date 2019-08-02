@@ -1,0 +1,10 @@
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'HEAD', 'Heading');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'DATE', 'Date Popup');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'CHAR', 'Characters');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'AUTO', 'Autocomplete');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'SELECT', 'Select/Dropdown');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'FLOAT', 'Float/Decimals');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'CHECK', 'Checkboxes');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'INT', 'Integers/Numbers');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'RADIO', 'Radio Buttons/Options Button');
+INSERT INTO `xfrtcodevalues` (`codetype`, `code`, `description`) VALUES ('MDTY', 'TEXT', 'Textarea/Multiline');

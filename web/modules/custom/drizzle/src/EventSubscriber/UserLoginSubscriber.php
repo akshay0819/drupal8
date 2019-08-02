@@ -46,10 +46,10 @@ class UserLoginSubscriber implements EventSubscriberInterface {
         } else {
             $key = $data['tenant'];
         }
-        $database = array(
-            'database' => $config->get('dbconnection.database'),
-            'username' => 'anaraj',
-            'password' => 'anaraj21',
+       $database = array(
+            'database' => 'trackplus',
+            'username' => 'root',
+            'password' => 'mysql123',
             'prefix' => '',
             'host' => $config->get('dbconnection.host'),
             'port' => $config->get('dbconnection.port'),

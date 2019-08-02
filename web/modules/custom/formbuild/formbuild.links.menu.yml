@@ -1,0 +1,5 @@
+# Define default links for this module.
+formbuild_example.form:
+  title: Formbuild API Examples
+  description: Formbuild examples using Drupal Formbuild API.
+  route_name: formbuild_example.form

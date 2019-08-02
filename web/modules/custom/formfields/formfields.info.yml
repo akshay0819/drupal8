@@ -1,0 +1,5 @@
+name: Formfields
+type: module
+description: A module that define formfields operations.
+package: modules
+core: 8.x

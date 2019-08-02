@@ -1,0 +1,58 @@
+formbuild_example.form:
+  path: '/formbuild/new'
+  defaults:
+    _form: '\Drupal\formbuild\Form\FormbuildForm'
+    _title: 'New Template'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+
+formbuild_example_edit: 
+  path: '/formbuild/edit/{apmdgpk}'
+  defaults: 
+    _form: '\Drupal\formbuild\Form\FormbuildForm'
+    _title_callback: '\Drupal\formbuild\Form\FormbuildForm::getTitle'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+formbuild_example_display: 
+  path: '/formbuild/display/{apmdgpk}'
+  defaults: 
+    _form: '\Drupal\formbuild\Form\FormbuildForm'
+    _title_callback: '\Drupal\formbuild\Form\FormbuildForm::getTitle'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
+formbuild_example_delete: 
+  path: '/formbuild/delete/{apmdgpk}'
+  defaults: 
+    _form: 'Drupal\formbuild\Form\Deleteformbuild'
+    _title: 'Delete Template'
+  requirements: 
+    _permission: 'access content'  
+
+formbuild_example.autocomplete:
+  path: '/formbuild-product-autocomplete'
+  defaults:
+    _controller: '\Drupal\formbuild\Controller\AutocompleteController::productAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+    
+formbuild_example.renderform:
+  path: '/addnewformbuild'
+  defaults:
+    _controller: '\Drupal\formbuild\Controller\AutocompleteController::manageAction'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+formbuild_example.list:
+  path: '/formbuildlist'
+  defaults: 
+    _controller: '\Drupal\formbuild\Controller\FormbuildController::formbuildlist'
+  requirements: 
+    _access: 'TRUE'    

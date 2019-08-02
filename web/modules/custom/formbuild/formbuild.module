@@ -1,0 +1,29 @@
+<?php
+
+function formbuild_theme($existing, $type, $theme, $path) {
+
+  return [
+    'formbuildtheme' => [
+//        'variables' =>
+//           [
+//               'templatefields' => NULL,
+//               'form' => NULL
+//           ],
+        'render element' => 'form',
+        'template' => 'my-formbuild-name',
+    ],
+  ];
+    
+    
+//    return array(
+//        'formbuildtheme' => array(
+//           'variables' =>
+//                [
+//                    'templatefields' => NULL,
+//                    'form' => NULL
+//                ],
+//            'template' => 'my-formbuild-name',
+//            'render element' => 'form'
+//        ),
+//    );    
+}

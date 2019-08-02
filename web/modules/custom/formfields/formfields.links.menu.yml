@@ -1,0 +1,5 @@
+# Define default links for this module.
+formfields_example.form:
+  title: Formfields API Examples
+  description: Formfields examples using Drupal Formfields API.
+  route_name: formfields_example.form

@@ -1,0 +1,58 @@
+formfields_example.form:
+  path: '/formfields/new'
+  defaults:
+    _form: '\Drupal\formfields\Form\FormfieldsForm'
+    _title: 'New Form Fields'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+
+formfields_example_edit: 
+  path: '/formfields/edit/{apmdpk}'
+  defaults: 
+    _form: '\Drupal\formfields\Form\FormfieldsForm'
+    _title: 'Edit Form Fields'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+formfields_example_display: 
+  path: '/formfields/display/{apmdpk}'
+  defaults: 
+    _form: '\Drupal\formfields\Form\FormfieldsForm'
+    _title: 'Display Form Fields'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
+formfields_example_delete: 
+  path: '/formfields/delete/{apmdpk}'
+  defaults: 
+    _form: 'Drupal\formfields\Form\Deleteformfields'
+    _title: 'Delete Form Fields'
+  requirements: 
+    _permission: 'access content'  
+
+formfields_example.autocomplete:
+  path: '/formfields-product-autocomplete'
+  defaults:
+    _controller: '\Drupal\formfields\Controller\AutocompleteController::productAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+    
+formfields_example.renderform:
+  path: '/addnewformfields'
+  defaults:
+    _controller: '\Drupal\formfields\Controller\AutocompleteController::manageAction'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+formfields_example.list:
+  path: '/formfieldslist'
+  defaults: 
+    _controller: '\Drupal\formfields\Controller\FormfieldsController::formfieldslist'
+  requirements: 
+    _access: 'TRUE'    

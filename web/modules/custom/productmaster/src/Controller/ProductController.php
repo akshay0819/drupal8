@@ -54,7 +54,7 @@ Class ProductController {
 
             // Row with attributes on the row and some of its cells.
             $rows[] = array(
-                'data' => array($item->productcode, $display_productlink, $item->productgroup, $item->producttype, $edit_productlink, $link_del)
+                'data' => array($item->productcode, $display_productlink, $item->productcatg, $item->producttype, $edit_productlink, $link_del)
             );
         }
         $add_productlink = CustomUtils::addButton('productmaster_add', '', 'medium', 'Add Product');
