@@ -19,6 +19,30 @@ Class CustomUtils {
         return $matches;
     }
 
+    static function jsonCapture($jsongroup, $form = [], $form_state = [], $values = [], $display = NULL) {
+        $getfields = json_decode($jsongroup, true);
+	$ftype = ['DATE' => 'date', 'CHAR' => 'textfield', 'AUTO' => 'textfield', 'SELECT' => 'select', 'FLOAT' => 'textfield', 'CHECK' => 'checkboxes', 'INT' => 'textfield', 'RADIO' => 'textfield', 'TEXT' => 'textarea'];
+	foreach ($getfields as $fld) {
+	$desc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	$type = db_query("SELECT apmdtype from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	$options = json_decode(db_query("SELECT apmdoptions from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField(), true);
+	$form[$fld] = [
+            '#type' => $ftype[$type],
+          //  '#title' => $this->t($desc),
+            '#default_value' => ($form_state->getValue($fld) != false) ? $form_state->getValue($fld) : $values[$fld],
+	    '#attributes' =>  isset($display) ? ['readonly' => 'readonly'] : [], 
+	];
+	if ($type == 'DATE') {
+	  $form[$fld]['#default_value'] = !empty($values[$fld]) ? date('Y-m-d', strtotime($values[$fld])) : date('Y-m-d');
+	}
+	if ($type == 'SELECT' || $type == 'RADIO' || $type == 'CHECK') {
+	  if (isset($display)) $form[$fld]['#disabled'] = TRUE;
+	  $form[$fld]['#options'] = $options;
+	}
+	}
+        return $form;
+    }
+
     static function deleteButton($formroute, $idArray, $size = NULL, $text = NULL) {
         if ($size == 'extrasmall') {
             $class = "btn btn-xs";

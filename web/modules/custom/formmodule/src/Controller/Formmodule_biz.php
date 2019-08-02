@@ -18,13 +18,14 @@ Class Formmodule_biz {
         return $result;
     }
 
-    static function save_formmodule($form, $form_state, $apmdgpk = '') {
+    static function save_formmodule($form, $form_state, $apmdgpk = '', $apmdgroupname = '') {
         $values = $form_state->getValues();
         //DbTransaction
         $transaction = db_transaction();
 	$insertid = db_insert('appform')
                 ->fields(array(
                     'appformid' => $apmdgpk,
+                    'appgroupname' => $apmdgroupname,
                     'appgroupfields' => json_encode($values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)
                 ))
                 ->execute();

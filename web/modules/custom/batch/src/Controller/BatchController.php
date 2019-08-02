@@ -9,9 +9,6 @@ use Drupal\customutil\CustomUtils;
 Class BatchController {
 
     public function batchlist() {
-drupal_flush_all_caches();
-echo "Test";
-die();
 
         $header = array(
 //            'companypk' => t('Company'),

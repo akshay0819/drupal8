@@ -30,10 +30,6 @@ class FormfieldsForm extends FormBase {
 
     public function buildForm(array $form, FormStateInterface $form_state, $formmode = '', $apmdpk = '') {
 
-drupal_flush_all_caches();
-echo "test";
-die();
-
         $this->apmdpk = $apmdpk;
         $this->formmode = $formmode;
         $display_mode = FALSE;

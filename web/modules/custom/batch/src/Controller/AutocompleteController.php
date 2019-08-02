@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 //use Drupal\Component\Utility\SafeMarkup;
-//use Drupal\Component\Utility\Tags;
+use Drupal\Component\Utility\Tags;
 use Drupal\Component\Utility\Unicode;
 
 /**
@@ -20,6 +20,20 @@ class AutocompleteController extends ControllerBase {
      * Handler for autocomplete request.
      */
     public function productAutocomplete(Request $request) {
+	$results = [];
+	if($input = $request->query->get('q')){
+		$typed_string = Tags::explode($input);
+		$typed_string = Unicode::strtolower(array_pop($typed_string));
+		$query = \Drupal::database()->select('frtproduct', 'n');
+		$query->fields('n', array('productdesc','productpk'));
+		//$query->condition('productdesc', $this->currentUser()->id(),,'!=');
+		$query->condition('productdesc', $query->escapeLike($typed_string) . '%', 'LIKE');
+		$result = $query->execute()->fetchAll();
+		foreach ($result as $fld) $results[] = ['value' => $fld->productdesc, 'label' => $fld->productdesc];
+	}
+	return new JsonResponse($results);
+
+/*
         $matches = array();
         $string = $request->query->get('q');
         $result = db_select('frtproduct', 'n')
@@ -31,8 +45,8 @@ class AutocompleteController extends ControllerBase {
         foreach ($result as $row) {
             $matches[$row->productpk] = $row->productdesc;
         }
-
         return new JsonResponse($matches);
+*/
     }
 
     static function getTemplateFields($templatepk) {

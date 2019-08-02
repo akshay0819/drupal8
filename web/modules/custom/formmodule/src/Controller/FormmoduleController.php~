@@ -40,6 +40,7 @@ Class FormmoduleController {
 	    $r = json_decode($item->appgroupfields, true);
 	    foreach ($r as $key => $value) {
 		if (in_array($key, $headers)) {
+		  if (empty($value)) $value = '';
 		  if (strpos($key, 'date') !== false) $row[] = date('m / d / Y', strtotime($value));
 		  else $row[] = $value;
 		}
@@ -81,7 +82,7 @@ Class FormmoduleController {
 //        $url = Url::fromRoute('mymodule_addcompany');
 //        $url->setOptions($link_options);
 //        $add_companylink = \Drupal::l(t('Add Company'), $url);
-        $add_formmodule = CustomUtils::addButton('formmodule_example.form', array('apmdgpk' => $apmdgpk), 'medium', 'Add ' . $result['apmdgroupname']);
+        $add_formmodule = CustomUtils::addButton('formmodule_example.form', array('apmdgpk' => $apmdgpk), 'medium', 'Add ' . $result['apmdgroupname'].' Form');
 
         $form['tablebody']['table_heading']['submit'] = [
             '#markup' => $add_formmodule,

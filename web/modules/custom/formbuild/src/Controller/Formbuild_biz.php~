@@ -26,9 +26,9 @@ Class Formbuild_biz {
                 ->fields(array(
                     'apmdgroupid' => $values['apmdgroupid'],
                     'apmdgroupname' => $values['apmdgroupname'],
-                    'apmdfields' => $values['apmdfields'],
-                    'aptablefields' => $values['aptablefields'],
-                    'apkeyfields' => $values['apkeyfields']
+                    'apmdfields' => json_encode(explode(",", trim($values['apmdfields']))),
+                    'aptablefields' => json_encode(explode(",", trim($values['aptablefields']))),
+                    'apkeyfields' => json_encode(explode(",", trim($values['apkeyfields'])))
                 ))
                 ->execute();
 
@@ -52,9 +52,9 @@ Class Formbuild_biz {
                 ->fields(array(
                     'apmdgroupid' => $values['apmdgroupid'],
                     'apmdgroupname' => $values['apmdgroupname'],
-                    'apmdfields' => $values['apmdfields'],
-                    'aptablefields' => $values['aptablefields'],
-                    'apkeyfields' => $values['apkeyfields']
+                    'apmdfields' => json_encode(explode(",", trim($values['apmdfields']))),
+                    'aptablefields' => json_encode(explode(",", trim($values['aptablefields']))),
+                    'apkeyfields' => json_encode(explode(",", trim($values['apkeyfields'])))
                 ))
                 ->condition('apmdgpk', $apmdgpk, '=')
                 ->execute();
@@ -66,9 +66,9 @@ Class Formbuild_biz {
         }
     }
 
-    static function delete_formbuild($formbuildpk) {
-        db_delete('tragformbuild')
-                ->condition('formbuildpk', $formbuildpk)
+    static function delete_formbuild($apmdgpk) {
+        db_delete('appmdgroup')
+                ->condition('apmdgpk', $apmdgpk)
                 ->execute();
     }
 

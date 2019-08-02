@@ -9,7 +9,6 @@
 summary {
     outline: none;
 }
-select:-moz-focusring {
-    color: transparent;
-    text-shadow: 0 0 0 #000;
+#formmodule-example-form .description {
+    font-size: 13px;
 }

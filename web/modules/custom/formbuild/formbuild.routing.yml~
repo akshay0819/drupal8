@@ -12,7 +12,7 @@ formbuild_example_edit:
   path: '/formbuild/edit/{apmdgpk}'
   defaults: 
     _form: '\Drupal\formbuild\Form\FormbuildForm'
-    _title_callback: '\Drupal\formbuild\Form\FormbuildForm::getTitle'
+    _title: 'Edit Template'
     formmode: 'EDIT'
   requirements:  
     _permission: 'access content'  
@@ -21,7 +21,7 @@ formbuild_example_display:
   path: '/formbuild/display/{apmdgpk}'
   defaults: 
     _form: '\Drupal\formbuild\Form\FormbuildForm'
-    _title_callback: '\Drupal\formbuild\Form\FormbuildForm::getTitle'
+    _title: 'Display Template'
     formmode: 'DISPLAY'
   requirements:  
     _permission: 'access content'  
@@ -37,7 +37,7 @@ formbuild_example_delete:
 formbuild_example.autocomplete:
   path: '/formbuild-product-autocomplete'
   defaults:
-    _controller: '\Drupal\formbuild\Controller\AutocompleteController::productAutocomplete'
+    _controller: '\Drupal\formbuild\Controller\AutocompleteController::metadataAutocomplete'
     _format: json
   requirements:
     _access: 'TRUE'

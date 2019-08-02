@@ -26,9 +26,9 @@ Class Formbuild_biz {
                 ->fields(array(
                     'apmdgroupid' => $values['apmdgroupid'],
                     'apmdgroupname' => $values['apmdgroupname'],
-                    'apmdfields' => $values['apmdfields'],
-                    'aptablefields' => $values['aptablefields'],
-                    'apkeyfields' => $values['apkeyfields']
+                    'apmdfields' => json_encode(explode(",", str_replace(" ", "", $values['apmdfields']))),
+                    'aptablefields' => json_encode(explode(",", str_replace(" ", "", $values['aptablefields']))),
+                    'apkeyfields' => json_encode(explode(",", str_replace(" ", "", $values['apkeyfields'])))
                 ))
                 ->execute();
 
@@ -52,9 +52,9 @@ Class Formbuild_biz {
                 ->fields(array(
                     'apmdgroupid' => $values['apmdgroupid'],
                     'apmdgroupname' => $values['apmdgroupname'],
-                    'apmdfields' => $values['apmdfields'],
-                    'aptablefields' => $values['aptablefields'],
-                    'apkeyfields' => $values['apkeyfields']
+                    'apmdfields' => json_encode(explode(",", str_replace(" ", "", $values['apmdfields']))),
+                    'aptablefields' => json_encode(explode(",", str_replace(" ", "", $values['aptablefields']))),
+                    'apkeyfields' => json_encode(explode(",", str_replace(" ", "", $values['apkeyfields'])))
                 ))
                 ->condition('apmdgpk', $apmdgpk, '=')
                 ->execute();

@@ -56,8 +56,8 @@
     .description {
 	display: none;
     }
-    #user-pass {width:354px;}
-    #user-pass .form-required::after {background-image: none;}
+    #user-login-form {width:354px;}
+    #user-login-form .form-required::after {background-image: none;}
     .kt-aside__brand-logo {
 	text-align: center;
     }
@@ -68,7 +68,7 @@
 	transform: translate(-50%, -50%);
 	background: #ffffff;
 	border-radius: 10px;
-	box-shadow: 7px 7px 5px #bfc7c8;
+	box-shadow: 7px 7px 5px #000;
     }
     #edit-submit {float: right; margin-top: 5px;}
 </style>
@@ -111,9 +111,9 @@
 								    </div>
                                                                     {% if page.content %}
                                                                         {{ page.content }}
-					<a href="{{base_path}}user/login" type="button" id="back-btn" class="btn btn-label btn-label-brand btn-sm btn-bold">
-      <i class="m-icon-swapleft"></i> Back
-    </a>
+									<div class="forget-password">
+    <p>Forgot your password? Click <a href="{{base_path}}user/password" title="Click here to reset password" id="forget-password">here</a></p>
+  </div>
                                                                     {% endif %}
                                                                 </div>
                                                             </div>

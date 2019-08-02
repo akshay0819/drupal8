@@ -71,7 +71,7 @@ class BatchForm extends FormBase {
         $form['productcode'] = [
             '#type' => 'textfield',
             '#autocomplete_route_name' => 'batch_example.autocomplete',
-	    //'#autocomplete_route_parameters' => array('field_name' => 'productcode'),
+	    '#autocomplete_route_parameters' => array('field_name' => 'productcode'),
             '#title' => $this->t('Product Name'),
             '#default_value' => ($form_state->getValue('productcode') != false)? $form_state->getValue('productcode') :$batchdet['productpk'],
             '#prefix' => '<div class="col-md-6">',

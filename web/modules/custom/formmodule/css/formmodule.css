@@ -9,3 +9,7 @@
 summary {
     outline: none;
 }
+#formmodule-example-form .description {
+    font-size: 13px;
+}
+#formmodule-example-form .description::before {content: '\A'; white-space: pre;}

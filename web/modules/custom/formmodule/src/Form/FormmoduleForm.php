@@ -50,7 +50,7 @@ class FormmoduleForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head"><div class="kt-portlet__head-label">',
             '#suffix' => '</div></div>',
         ];
-
+	$this->apmdgroupname = $result['apmdgroupname'];
         $form['formbody'] = [
             '#markup' => '<form role="form" class="kt-form">
                         <div class="form-body">
@@ -66,7 +66,7 @@ class FormmoduleForm extends FormBase {
 	}
         else {
 	$edit_formfields = CustomUtils::addButton('formmodule_example_edit', array('apmdgpk' => $apmdgpk, 'appformpk' => $appformpk), 'medium', 'Edit '. $result['apmdgroupname'] . ' Form');
-
+        
         $form['buttons']['submitedit'] = [
             '#markup' => $edit_formfields,
             '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
@@ -101,16 +101,18 @@ class FormmoduleForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => isset($this->display_mode) ? '</div></div></div><div class="col-md-6"></div>' : '</div></div></div>',
+            '#suffix' => '</div></div></div>',
         ];
         
         $getfields = json_decode($result['apmdfields'], true);
 	$values = json_decode($formmoduledet['appgroupfields'],true);
 	$ftype = ['DATE' => 'date', 'CHAR' => 'textfield', 'AUTO' => 'textfield', 'SELECT' => 'select', 'FLOAT' => 'textfield', 'CHECK' => 'checkboxes', 'INT' => 'textfield', 'RADIO' => 'textfield', 'TEXT' => 'textarea'];
 	$i = 0;$j = 0;
-	foreach ($getfields as $fld)  {
+	foreach ($getfields as $fld) {
 	$desc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
 	$type = db_query("SELECT apmdtype from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	//$apmdpk = db_query("SELECT apmdpk from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	//$aplandesc = db_query("SELECT aplandesc from {appmdlan} WHERE appmdpk = :apmdpk LIMIT 1", array(":apmdpk" => $apmdpk))->fetchField();
 	$options = json_decode(db_query("SELECT apmdoptions from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField(), true);
 	$hdesc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype = 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
 	if (!empty($hdesc)) {
@@ -123,6 +125,7 @@ class FormmoduleForm extends FormBase {
             '#title' => $this->t($desc),
             '#default_value' => ($form_state->getValue($fld) != false) ? $form_state->getValue($fld) : $values[$fld],
 	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	   // '#description' => empty($aplandesc) ? '' : $this->t($aplandesc),
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -226,7 +229,7 @@ class FormmoduleForm extends FormBase {
 
         switch ($this->formmode) {
             case 'NEW':
-                $returnval = Formmodule_biz::save_formmodule($form, $form_state, $this->apmdgpk);
+                $returnval = Formmodule_biz::save_formmodule($form, $form_state, $this->apmdgpk, $this->apmdgroupname);
                 if ($returnval == 'FAIL') {                    
                 } else {
                     drupal_set_message(t("Formmodule Saved Successfully"));
