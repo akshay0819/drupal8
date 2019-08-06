@@ -1,0 +1,5 @@
+name: Formbuild
+type: module
+description: A module can define Formbuild operations.
+package: modules
+core: 8.x

@@ -1,0 +1,66 @@
+forminspection_example.form:
+  path: '/forminspection/new'
+  defaults:
+    _form: '\Drupal\forminspection\Form\ForminspectionForm'
+    _title: 'New Inspection'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+
+forminspection_example_edit: 
+  path: '/forminspection/edit/{appinspformpk}'
+  defaults: 
+    _form: '\Drupal\forminspection\Form\ForminspectionForm'
+    _title: 'Edit Inspection'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+forminspection_example_display: 
+  path: '/forminspection/display/{appinspformpk}'
+  defaults: 
+    _form: '\Drupal\forminspection\Form\ForminspectionForm'
+    _title: 'Display Inspection'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
+forminspection_example_delete: 
+  path: '/forminspection/delete/{appinspformpk}'
+  defaults: 
+    _form: 'Drupal\forminspection\Form\Deleteforminspection'
+    _title: 'Delete Inspection'
+  requirements: 
+    _permission: 'access content'
+
+forminspection_slab_theme: 
+  path: '/forminspectiontheme'
+  defaults: 
+    _controller: '\Drupal\forminspection\Controller\ForminspectionTheme'
+    _title: 'Theme Inspection Slab'
+  requirements:  
+   _permission: 'access content'
+
+forminspection_example.autocomplete:
+  path: '/forminspection-md-autocomplete'
+  defaults:
+    _controller: '\Drupal\forminspection\Controller\AutocompleteController::inspAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+    
+forminspection_example.renderform:
+  path: '/addnewforminspection'
+  defaults:
+    _controller: '\Drupal\forminspection\Controller\AutocompleteController::manageAction'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+forminspection_example.list:
+  path: '/forminspectionlist'
+  defaults: 
+    _controller: '\Drupal\forminspection\Controller\ForminspectionController::forminspectionlist'
+  requirements: 
+    _access: 'TRUE'    

@@ -1,0 +1,77 @@
+<?php
+
+namespace Drupal\forminspection\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+//use Drupal\Component\Utility\SafeMarkup;
+//use Drupal\Component\Utility\Tags;
+use Drupal\Component\Utility\Unicode;
+
+/**
+ * Defines a route controller for entity autocomplete form elements.
+ */
+class AutocompleteController extends ControllerBase {
+
+    /**
+     * Handler for autocomplete request.
+     */
+    public function metadataAutocomplete(Request $request) {
+        $matches = array();
+        $string = $request->query->get('q');
+        $result = db_select('appmetadata', 'n')
+                ->fields('n', array('apmdname', 'apmddesc'))
+                ->condition(
+                db_or()
+                ->condition('apmdname', '%' . db_like($string) . '%', 'LIKE')
+                ->condition('apmddesc', '%' . db_like($string) . '%', 'LIKE')
+                )->execute();
+
+        foreach ($result as $row) {
+            $matches[] = ['value' => $row->apmdname, 'label' => $row->apmddesc];
+        }
+
+        return new JsonResponse($matches);
+    }
+
+    static function getTemplateFields($templatepk) {
+        $result = db_select('tragcustomtemplatefields', 'fc')
+                ->fields('fc', array('slno', 'fcode', 'fname', 'ftype'))
+                ->condition('customtemplatepk', $templatepk, '=')
+                ->execute()
+                ->fetchAll();
+        return $result;
+    }
+
+    static function getTemplates() {
+         $matches = array();
+         $matches[] = 'Select Template';
+        $result = db_select('tragcustomtemplate', 'fc')
+                ->fields('fc', array('customtemplatepk', 'customtemplatename'))
+                ->execute()
+                ->fetchAll();
+        foreach ($result as $row) {
+            $matches[$row->customtemplatepk] = $row->customtemplatename;
+        }
+         return $matches;
+    }
+    
+    
+    public function manageAction() {
+
+        $id = 1;
+
+        $form = \Drupal::forminspectioner()->getForm('Drupal\forminspection\Form\ForminspectionForm');
+
+//        $form['type']['#title_display'] = 'invisible';
+
+        return [ '#theme' => 'forminspectiontheme',
+            '#form' => $form,
+            '#templatefields' => 'ss',
+        ];
+    }
+
+}

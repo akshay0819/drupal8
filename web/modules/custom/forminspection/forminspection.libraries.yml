@@ -1,0 +1,4 @@
+forminspection:
+  version: 1.x
+  js:
+    js/forminspection.js: {}

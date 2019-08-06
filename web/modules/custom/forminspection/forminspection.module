@@ -1,0 +1,12 @@
+<?php
+
+function forminspection_theme($existing, $type, $theme, $path) {
+
+  return [
+    'forminspectiontheme' => [
+        'render element' => 'form',
+        'template' => 'my-forminspection-name',
+	'variables' => ['slab_var' => NULL],
+    ],
+  ]; 
+}

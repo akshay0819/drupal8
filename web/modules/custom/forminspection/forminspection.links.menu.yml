@@ -1,0 +1,5 @@
+# Define default links for this module.
+forminspection_example.form:
+  title: Forminspection API Examples
+  description: Forminspection examples using Drupal Forminspection API.
+  route_name: forminspection_example.form

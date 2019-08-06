@@ -1,0 +1,4 @@
+formbuildautocomplete:
+  version: 1.x
+  js:
+    js/formbuild_autocomplete.js: {}

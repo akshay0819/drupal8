@@ -1,0 +1,5 @@
+name: Forminspection
+type: module
+description: A module that define Form inspection.
+package: modules
+core: 8.x
