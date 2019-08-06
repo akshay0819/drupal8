@@ -5,6 +5,7 @@ namespace Drupal\formbuild\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Render\Element\Textarea;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Drupal\customutil\CustomUtils;
@@ -118,43 +119,76 @@ class FormbuildForm extends FormBase {
         ];
 
 	$form['apmdfields'] = [
-            '#type' => isset($this->display_mode) ? 'textarea' : 'textfield',
+            '#type' => 'textarea',
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Fields'),
             '#default_value' => ($form_state->getValue('apmdfields') != false) ? $form_state->getValue('apmdfields') : implode(",", json_decode($formbuilddet['apmdfields'], true)),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-	    '#maxlength' => 1000,
-            '#prefix' => '<div class="col-md-6">',
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [],
+	    '#process' => [
+	      [Textarea::class, 'processAutocomplete'],
+	    ],
+	    '#attached' => [
+	      'library' => [
+	        'formbuild/formbuildautocomplete'
+	      ],
+	    ],
+	    '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 
-        
+       // $form['#attached']['library'][] = 'formbuild/formbuildautocomplete';
 	$form['aptablefields'] = [
-            '#type' => isset($this->display_mode) ? 'textarea' : 'textfield',
+            '#type' => 'textarea',
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Table Fields'),
             '#default_value' => ($form_state->getValue('aptablefields') != false) ? $form_state->getValue('aptablefields') : implode(",", json_decode($formbuilddet['aptablefields'], true)),
             '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
+            '#process' => [
+	      [Textarea::class, 'processAutocomplete'],
+	    ],
+	    '#attached' => [
+	      'library' => [
+	        'formbuild/formbuildautocomplete'
+	      ],
+	    ],
+	    '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 
         
         $form['apkeyfields'] = [
-            '#type' => isset($this->display_mode) ? 'textarea' : 'textfield',
+            '#type' => 'textarea',
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Keys'),
-            '#rows' => 2,
             '#default_value' => ($form_state->getValue('apkeyfields') != false) ? $form_state->getValue('apkeyfields') : implode(",", json_decode($formbuilddet['apkeyfields'], true)),
             '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#process' => [
+	      [Textarea::class, 'processAutocomplete'],
+	    ],
+	    '#attached' => [
+	      'library' => [
+	        'formbuild/formbuildautocomplete'
+	      ],
+	    ],
+	    '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	$form['grouptype'] = [
+            '#type' =>  'select',
+            '#title' => $this->t('Template Type'),
+            '#options' => array('', 'INSP' => 'Inspection'),
+            '#default_value' => ($form_state->getValue('grouptype') != false)? $form_state->getValue('grouptype') :(isset($this->display_mode) ? $formbuilddet['grouptype'] : $formbuilddet['grouptype']),
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
+
 	if (!isset($this->display_mode)) {
 	$form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6"></div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -163,7 +197,7 @@ class FormbuildForm extends FormBase {
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',

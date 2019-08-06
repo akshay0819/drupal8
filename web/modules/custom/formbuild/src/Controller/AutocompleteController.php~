@@ -24,8 +24,8 @@ class AutocompleteController extends ControllerBase {
         $string = $request->query->get('q');
         $result = db_select('appmetadata', 'n')
                 ->fields('n', array('apmdname', 'apmddesc'))
-                ->condition('productdesc', '%' . db_like($string) . '%', 'LIKE')
-//                ->condition('productcode', '%' . db_like($string) . '%', 'LIKE')
+              //  ->condition('apmdname', '%' . db_like($string) . '%', 'LIKE')
+                ->condition('apmddesc', '%' . db_like($string) . '%', 'LIKE')
                 ->execute();
 
         foreach ($result as $row) {

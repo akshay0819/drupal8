@@ -27,7 +27,8 @@ Class Formfields_biz {
                     'apmdtype' => $values['apmdtype'],
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
-                    'apmdname' => $values['apmdname']
+                    'apmdname' => $values['apmdname'],
+                    'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
 
@@ -52,7 +53,9 @@ Class Formfields_biz {
                     'apmdtype' => $values['apmdtype'],
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
-                    'apmdname' => $values['apmdname']
+                    'apmdname' => $values['apmdname'],
+                    'updatedby' => \Drupal::currentUser()->id(),
+                    'updatedtime' => date('Y-m-d H:i:s', time())
                 ))
                 ->condition('apmdpk', $apmdpk, '=')
                 ->execute();

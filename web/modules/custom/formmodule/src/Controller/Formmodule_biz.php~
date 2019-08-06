@@ -20,13 +20,19 @@ Class Formmodule_biz {
 
     static function save_formmodule($form, $form_state, $apmdgpk = '', $apmdgroupname = '') {
         $values = $form_state->getValues();
+	unset($values['submitup']);
+        unset($values['submit']);
+        unset($values['form_build_id']);
+        unset($values['form_token']);
+        unset($values['form_id']);
         //DbTransaction
-        $transaction = db_transaction();drupal_set_message("a ". $apmdgroupname);
+        $transaction = db_transaction();
 	$insertid = db_insert('appform')
                 ->fields(array(
                     'appformid' => $apmdgpk,
                     'appgroupname' => $apmdgroupname,
-                    'appgroupfields' => json_encode($values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)
+                    'appgroupfields' => json_encode($values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT),
+                    'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
 
@@ -43,14 +49,22 @@ Class Formmodule_biz {
 
         $values = $form_state->getValues();
         //DbTransaction
+	unset($values['submitup']);
+        unset($values['submit']);
+        unset($values['form_build_id']);
+        unset($values['form_token']);
+        unset($values['form_id']);
+        unset($values['op']);
 
         $transaction = db_transaction();
 
         $update = db_update('appform')
                 ->fields(array(
-                    'appgroupfields' => json_encode($values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)
+                    'appgroupfields' => json_encode($values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT),
+                    'updatedby' => \Drupal::currentUser()->id(),
+		    'updatedtime' => date('Y-m-d H:i:s', time())
                 ))
-                ->condition('appformid', $apmdgpk, '=')
+            //    ->condition('appformid', $apmdgpk, '=')
                 ->condition('appformpk', $appformpk, '=')
                 ->execute();
 

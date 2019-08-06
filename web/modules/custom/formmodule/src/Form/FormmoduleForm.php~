@@ -5,6 +5,7 @@ namespace Drupal\formmodule\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Render\Element\Textarea;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Drupal\customutil\CustomUtils;
@@ -101,7 +102,7 @@ class FormmoduleForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => isset($this->display_mode) ? '</div></div></div><div class="col-md-6"></div>' : '</div></div></div>',
+            '#suffix' => '</div></div></div>',
         ];
         
         $getfields = json_decode($result['apmdfields'], true);

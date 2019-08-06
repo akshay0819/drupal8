@@ -28,7 +28,8 @@ Class Formbuild_biz {
                     'apmdgroupname' => $values['apmdgroupname'],
                     'apmdfields' => json_encode(explode(",", str_replace(" ", "", $values['apmdfields']))),
                     'aptablefields' => json_encode(explode(",", str_replace(" ", "", $values['aptablefields']))),
-                    'apkeyfields' => json_encode(explode(",", str_replace(" ", "", $values['apkeyfields'])))
+                    'apkeyfields' => json_encode(explode(",", str_replace(" ", "", $values['apkeyfields']))),
+		    'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
 
@@ -54,7 +55,9 @@ Class Formbuild_biz {
                     'apmdgroupname' => $values['apmdgroupname'],
                     'apmdfields' => json_encode(explode(",", str_replace(" ", "", $values['apmdfields']))),
                     'aptablefields' => json_encode(explode(",", str_replace(" ", "", $values['aptablefields']))),
-                    'apkeyfields' => json_encode(explode(",", str_replace(" ", "", $values['apkeyfields'])))
+                    'apkeyfields' => json_encode(explode(",", str_replace(" ", "", $values['apkeyfields']))),
+		    'updatedby' => \Drupal::currentUser()->id(),
+                    'updatedtime' => date('Y-m-d H:i:s', time())
                 ))
                 ->condition('apmdgpk', $apmdgpk, '=')
                 ->execute();

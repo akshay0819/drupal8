@@ -27,7 +27,8 @@ Class Formfields_biz {
                     'apmdtype' => $values['apmdtype'],
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
-                    'apmdname' => $values['apmdname']
+                    'apmdname' => $values['apmdname'],
+                    'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
 
@@ -40,7 +41,7 @@ Class Formfields_biz {
 
 
 
-    static function edit_formfields($form, $form_state, $apmdgpk = '') {
+    static function edit_formfields($form, $form_state, $apmdpk = '') {
 
         $values = $form_state->getValues();
         //DbTransaction
@@ -52,7 +53,8 @@ Class Formfields_biz {
                     'apmdtype' => $values['apmdtype'],
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
-                    'apmdname' => $values['apmdname']
+                    'apmdname' => $values['apmdname'],
+                    'updatedby' => \Drupal::currentUser()->id()
                 ))
                 ->condition('apmdpk', $apmdpk, '=')
                 ->execute();
