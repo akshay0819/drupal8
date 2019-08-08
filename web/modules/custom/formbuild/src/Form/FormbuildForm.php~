@@ -173,22 +173,12 @@ class FormbuildForm extends FormBase {
 	    '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
-	$form['grouptype'] = [
-            '#type' =>  'select',
-            '#title' => $this->t('Template Type'),
-            '#options' => array('', 'INSP' => 'Inspection'),
-            '#default_value' => ($form_state->getValue('grouptype') != false)? $form_state->getValue('grouptype') :(isset($this->display_mode) ? $formbuilddet['grouptype'] : $formbuilddet['grouptype']),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
-        ];
-
+	
 	if (!isset($this->display_mode)) {
 	$form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="col-md-6"></div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -197,7 +187,7 @@ class FormbuildForm extends FormBase {
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',

@@ -1,0 +1,14 @@
+#edit-h1, #edit-h2 {
+    width: 100%;
+    padding-bottom: 1.3em;
+}
+.details-wrapper .col-md-6 {
+    display: inline-block;
+    vertical-align: top;
+}
+summary {
+    outline: none;
+}
+#formmodule-example-form .description {
+    font-size: 13px;
+}

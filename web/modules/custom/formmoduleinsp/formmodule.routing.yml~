@@ -1,0 +1,58 @@
+formmodule_example.form:
+  path: '/formmodule/new'
+  defaults:
+    _form: '\Drupal\formmodule\Form\FormmoduleForm'
+    _title: 'New Form'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+
+formmodule_example_edit: 
+  path: '/formmodule/edit/{apmdgpk}/{appformpk}'
+  defaults: 
+    _form: '\Drupal\formmodule\Form\FormmoduleForm'
+    _title: 'Edit Form'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+formmodule_example_display: 
+  path: '/formmodule/display/{apmdgpk}/{appformpk}'
+  defaults: 
+    _form: '\Drupal\formmodule\Form\FormmoduleForm'
+    _title: 'Display Form'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
+formmodule_example_delete: 
+  path: '/formmodule/delete/{apmdgpk}/{appformpk}'
+  defaults: 
+    _form: 'Drupal\formmodule\Form\Deleteformmodule'
+    _title: 'Delete Form'
+  requirements: 
+    _permission: 'access content'  
+
+formmodule_example.autocomplete:
+  path: '/formmodule-product-autocomplete'
+  defaults:
+    _controller: '\Drupal\formmodule\Controller\AutocompleteController::productAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+    
+formmodule_example.renderform:
+  path: '/addnewformmodule'
+  defaults:
+    _controller: '\Drupal\formmodule\Controller\AutocompleteController::manageAction'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+formmodule_example.list:
+  path: '/formmodulelist/{apmdgpk}'
+  defaults: 
+    _controller: '\Drupal\formmodule\Controller\FormmoduleController::formmodulelist'
+  requirements: 
+    _access: 'TRUE'    

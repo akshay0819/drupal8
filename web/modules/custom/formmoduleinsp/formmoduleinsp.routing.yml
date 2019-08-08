@@ -1,0 +1,50 @@
+formmoduleinsp_example.form:
+  path: '/formmoduleinsp/new/{appinspformpk}'
+  defaults:
+    _form: '\Drupal\formmoduleinsp\Form\FormmoduleinspForm'
+    _title: 'New Inspection Form'
+    formmode: 'NEW'
+  requirements:
+    _permission: 'access content'
+    
+
+formmoduleinsp_example_edit: 
+  path: '/formmoduleinsp/edit/{appinspformpk}/{appformpk}'
+  defaults: 
+    _form: '\Drupal\formmoduleinsp\Form\FormmoduleinspForm'
+    _title: 'Edit Inspection Form'
+    formmode: 'EDIT'
+  requirements:  
+    _permission: 'access content'  
+
+formmoduleinsp_example_display: 
+  path: '/formmoduleinsp/display/{appinspformpk}/{appformpk}'
+  defaults: 
+    _form: '\Drupal\formmoduleinsp\Form\FormmoduleinspForm'
+    _title: 'Display Inspection Form'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
+formmoduleinsp_example_delete: 
+  path: '/formmoduleinsp/delete/{appinspformpk}/{appformpk}'
+  defaults: 
+    _form: 'Drupal\formmoduleinsp\Form\Deleteformmoduleinsp'
+    _title: 'Delete Inspection Form'
+  requirements: 
+    _permission: 'access content'  
+
+formmoduleinsp_example.autocomplete:
+  path: '/formmoduleinsp-product-autocomplete'
+  defaults:
+    _controller: '\Drupal\formmoduleinsp\Controller\AutocompleteController::moduleinspAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+formmoduleinsp_example.list:
+  path: '/formmoduleinsplist/{appinspformpk}'
+  defaults: 
+    _controller: '\Drupal\formmoduleinsp\Controller\FormmoduleinspController::formmoduleinsplist'
+  requirements: 
+    _access: 'TRUE'    

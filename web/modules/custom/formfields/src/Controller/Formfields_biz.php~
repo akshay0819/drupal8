@@ -54,7 +54,8 @@ Class Formfields_biz {
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
                     'apmdname' => $values['apmdname'],
-                    'updatedby' => \Drupal::currentUser()->id()
+                    'updatedby' => \Drupal::currentUser()->id(),
+                    'updatedtime' => date('Y-m-d H:i:s', time())
                 ))
                 ->condition('apmdpk', $apmdpk, '=')
                 ->execute();

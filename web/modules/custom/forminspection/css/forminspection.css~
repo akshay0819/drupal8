@@ -1,0 +1,8 @@
+.js-form-wrapper .form-item label {
+    display: block !important;
+    float: none;
+    padding-top: 0;
+}
+.js-form-wrapper textarea.form-control {
+    width: 100% !important;
+}

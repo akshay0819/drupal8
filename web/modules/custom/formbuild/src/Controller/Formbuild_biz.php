@@ -5,7 +5,7 @@ namespace Drupal\formbuild\Controller;
 Class Formbuild_biz {
 
     static function getformbuilddet($formbuildpk = NULL) {
-
+	$result = array();
         if (!empty($formbuildpk)) {
             $headerquery = db_select('appmdgroup', 'a');
             $headerquery->fields('a');

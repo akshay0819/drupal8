@@ -28,15 +28,15 @@ class Deleteforminspection extends ConfirmFormBase {
         return new Url('forminspection_example.list');
     }
 
-    public function inspectionForm(array $form, FormStateInterface $form_state, $appinspformpk = NULL) {
+    public function buildForm(array $form, FormStateInterface $form_state, $appinspformpk = NULL) {
         $this->appinspformpk = $appinspformpk;
-        return parent::inspectionForm($form, $form_state);
+        return parent::buildForm($form, $form_state);
     }
 
     public function submitForm(array &$form, FormStateInterface $form_state) {
         Forminspection_biz::delete_forminspection($this->appinspformpk);
 //    watchdog('bd_contact', 'Deleted product  with id %id.', array('%id' => $this->id));
-        drupal_set_message(t('Metadata Group %id has been deleted.', array('%id' => $this->appinspformpk)));
+        drupal_set_message(t('Inspection Form %id has been deleted.', array('%id' => $this->appinspformpk)));
         return new RedirectResponse(\Drupal::url('forminspection_example.list'));
     }
 

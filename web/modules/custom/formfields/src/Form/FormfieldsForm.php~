@@ -112,7 +112,7 @@ class FormfieldsForm extends FormBase {
             '#type' =>  'select',
             '#title' => $this->t('Field Type'),
             '#options' => $types,
-            '#default_value' => ($form_state->getValue('apmdtype') != false)? $form_state->getValue('apmdtype') :(isset($this->display_mode) ? $types[$formfieldsdet['apmdtype']] : $formfieldsdet['apmdtype']),
+            '#default_value' => ($form_state->getValue('apmdtype') != false)? $form_state->getValue('apmdtype') :(isset($this->display_mode) ? $formfieldsdet['apmdtype'] : $formfieldsdet['apmdtype']),
             '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
 	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
             '#prefix' => '<div class="col-md-6">',

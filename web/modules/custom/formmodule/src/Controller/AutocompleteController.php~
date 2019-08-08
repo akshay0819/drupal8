@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\formbuild\Controller;
+namespace Drupal\formmodule\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Form\FormBase;
@@ -19,7 +19,7 @@ class AutocompleteController extends ControllerBase {
     /**
      * Handler for autocomplete request.
      */
-    public function productAutocomplete(Request $request) {
+    public function moduleAutocomplete(Request $request) {
         $matches = array();
         $string = $request->query->get('q');
         $result = db_select('frtproduct', 'n')
@@ -62,11 +62,11 @@ class AutocompleteController extends ControllerBase {
 
         $id = 1;
 
-        $form = \Drupal::formBuilder()->getForm('Drupal\formbuild\Form\FormbuildForm');
+        $form = \Drupal::formBuilder()->getForm('Drupal\formmodule\Form\FormbuildForm');
 
 //        $form['type']['#title_display'] = 'invisible';
 
-        return [ '#theme' => 'formbuildtheme',
+        return [ '#theme' => 'formmoduletheme',
             '#form' => $form,
             '#templatefields' => 'ss',
         ];

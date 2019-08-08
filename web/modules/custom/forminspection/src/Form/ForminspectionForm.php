@@ -171,16 +171,15 @@ class ForminspectionForm extends FormBase {
         ];
 	$form['field_container'] = array(
             '#type' => 'container',
-//            '#weight' => 80,
             '#tree' => TRUE,
-            // Set up the wrapper so that AJAX will be able to replace the fieldset.
             '#prefix' => '<div id="js-ajax-elements-wrapper">',
             '#suffix' => '</div>',
         );
         $count = count($details);
-//drupal_set_message($form_state->get('field_deltas'));
         if ($form_state->get('field_deltas') == '') {
-            $form_state->set('field_deltas', range(0, $count - 1));
+	    if ($count > 0)
+	      $form_state->set('field_deltas', range(0, $count - 1));
+            else $form_state->set('field_deltas', range(0, 0));
         }
 
         $field_count = $form_state->get('field_deltas');
@@ -188,7 +187,7 @@ class ForminspectionForm extends FormBase {
         $form_state->set('arraycount', $count);
 //        }
 
-
+	if (!isset($this->display_mode)) {
         $form['field_container']['add_name'] = array(
             '#type' => 'submit',
             '#value' => t('Add More'),
@@ -200,7 +199,7 @@ class ForminspectionForm extends FormBase {
             '#prefix' => '<div class="row"><br/>',
             '#suffix' => '</div>',
         );
-
+	}
         foreach ($field_count as $delta) {
             $form['field_container'][$delta] = array(
                 '#prefix' => '<div class="row">',
@@ -215,19 +214,18 @@ class ForminspectionForm extends FormBase {
 	
             $form['field_container'][$delta]['slno'] = array(
                 '#type' => 'textfield',
-                '#title' => t('Sl No'),
-                '#default_value' => isset($details[$delta]->slno) ? $details[$delta]->slno : $delta,
+              //  '#title' => t('Sl No'),
+                '#default_value' => isset($details[$delta]->slno) ? $details[$delta]->slno : $delta+1,
 		'#attributes' => array('readonly' => 'readonly'),
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+                '#prefix' => '<div class="col-md-1 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
             $form['field_container'][$delta]['chapter'] = array(
-                '#type' => 'textfield',
-                '#title' => t('Chapter No'),
+                '#type' => 'textarea',
+                '#title' => t('ChapterNo'),
                 '#default_value' => $details[$delta]->chapter,
-		'#maxlength' => 1000,
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+		'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -235,7 +233,7 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Requirements'),
                 '#default_value' => $details[$delta]->requirements,
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+                '#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -243,7 +241,7 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Checklist'),
                 '#default_value' => $details[$delta]->checklist,
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+                '#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -251,7 +249,7 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Evidence'),
                 '#default_value' => $details[$delta]->evidence,
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+                '#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -259,7 +257,7 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Comments'),
                 '#default_value' => $details[$delta]->comments,
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+                '#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -267,10 +265,10 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Feedback'),
                 '#default_value' => $details[$delta]->feedback,
-                '#prefix' => '<div class="col-md-5 col-sm-10">',
+                '#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
-
+	    if (!isset($this->display_mode)) {
             $form['field_container'][$delta]['remove_name'] = array(
                 '#type' => 'submit',
                 '#value' => t('-'),
@@ -283,9 +281,10 @@ class ForminspectionForm extends FormBase {
                     'class' => array('button-small'),
                 ),
                 '#name' => 'remove_name_' . $delta,
-                '#prefix' => '<div class="col-md-2 col-sm-10">',
+                '#prefix' => '<div class="col-md-1 col-sm-10">',
                 '#suffix' => '</div>',
             );
+	    }
         }
 	
 	if (!isset($this->display_mode)) {
@@ -332,6 +331,7 @@ class ForminspectionForm extends FormBase {
         ];
 
 
+        $form['#attached']['library'][] = 'forminspection/forminspection';
         return $form;
     }
      /**
@@ -436,11 +436,11 @@ class ForminspectionForm extends FormBase {
             $form_state->setErrorByName('apmdgroupid', $this->t('There is already one Group with this id. Please enter different apmdgroupid'));
         }
         */
-//        $form_state->setReinspection();
+//        $form_state->setRebuild();
     }
 
     public function fapiExampleMultistepFormNextSubmit(array &$form, FormStateInterface $form_state) {
-        $form_state->setReinspection();
+        $form_state->setRebuild();
     }
 
     /**
@@ -449,7 +449,7 @@ class ForminspectionForm extends FormBase {
     public function submitForm(array &$form, FormStateInterface $form_state) {
         $appinspformpk = $form_state->getValue('appinspformpk');
         
-        $vals = $form_state->getValues();
+       // $vals = $form_state->getValues();
 
         switch ($this->formmode) {
             case 'NEW':
@@ -487,7 +487,7 @@ class ForminspectionForm extends FormBase {
      * returns it as a form (renderable array).
      */
     public function textfieldsCallback($form, FormStateInterface $form_state) {
-        $form_state->setReinspection();
+        $form_state->setRebuild();
         return $form['textfields_container'];
     }
 

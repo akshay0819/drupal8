@@ -41,14 +41,6 @@ formbuild_example.autocomplete:
     _format: json
   requirements:
     _access: 'TRUE'
-    
-formbuild_example.renderform:
-  path: '/addnewformbuild'
-  defaults:
-    _controller: '\Drupal\formbuild\Controller\AutocompleteController::manageAction'
-    _format: json
-  requirements:
-    _access: 'TRUE'
 
 formbuild_example.list:
   path: '/formbuildlist'

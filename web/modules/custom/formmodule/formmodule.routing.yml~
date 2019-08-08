@@ -1,5 +1,5 @@
 formmodule_example.form:
-  path: '/formmodule/new'
+  path: '/formmodule/new/{apmdgpk}'
   defaults:
     _form: '\Drupal\formmodule\Form\FormmoduleForm'
     _title: 'New Form'
@@ -35,9 +35,9 @@ formmodule_example_delete:
     _permission: 'access content'  
 
 formmodule_example.autocomplete:
-  path: '/formmodule-product-autocomplete'
+  path: '/formmodule-module-autocomplete'
   defaults:
-    _controller: '\Drupal\formmodule\Controller\AutocompleteController::productAutocomplete'
+    _controller: '\Drupal\formmodule\Controller\AutocompleteController::moduleAutocomplete'
     _format: json
   requirements:
     _access: 'TRUE'

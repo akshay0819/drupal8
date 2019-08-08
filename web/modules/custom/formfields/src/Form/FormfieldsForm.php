@@ -251,7 +251,7 @@ class FormfieldsForm extends FormBase {
         // //$form_state->setRebuild();
         // $form_state->setRedirect('formfields_example.list');
 
-        $vals = $form_state->getValues();
+       // $vals = $form_state->getValues();
 
         switch ($this->formmode) {
             case 'NEW':

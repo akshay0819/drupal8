@@ -35,7 +35,7 @@ formbuild_example_delete:
     _permission: 'access content'  
 
 formbuild_example.autocomplete:
-  path: '/formbuild-product-autocomplete'
+  path: '/formbuild-md-autocomplete'
   defaults:
     _controller: '\Drupal\formbuild\Controller\AutocompleteController::metadataAutocomplete'
     _format: json

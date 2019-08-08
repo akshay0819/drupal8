@@ -1,0 +1,15 @@
+.js-form-type-textfield {
+margin: 0 !important;
+}
+.js-form-type-textfield input {
+height: 30px !important;
+padding: 0px !important;
+border:0 none; 
+border-bottom: 1px dashed #989895 !important;
+width: 352px !important;
+}
+details {
+border: 0 none !important;
+color: #464457;
+width: 100%;
+}

@@ -30,8 +30,8 @@ Class Forminspection_biz {
     }
 
     static function save_forminspection($form, $form_state) {
+
         $values = $form_state->getValues();
-        //DbTransaction
         $transaction = db_transaction();
 
         $insertid = db_insert('appinspectionform')
@@ -47,49 +47,22 @@ Class Forminspection_biz {
                     'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
-echo "<pre>";
-print_r($values);
-echo "</pre>";die();
-//echo $insertid;
-die();
-	foreach ($values['field_container'] as $key => $value) {
-//foreach ($value['field_container'] as $val1) {
 
-//echo "<pre>";
-//print_r($val1);
-//echo $val1->requirements;
-//echo $val1['slno'];
-//echo "</pre>";
-//die();
-//}
-/*
+	for ($i = 0; $i < 100; $i++) {
+		if (empty($form_state->getValue(['field_container',$i,'slno']))) continue;
 		$insertdtl = db_insert('appinspectiondtl')
 		        ->fields(array(
 		            'appinspformpk' => $insertid,
-		            'slno' => $value['slno'],
-		            'chapter' => $value['chapter'],
-		            'requirements' => $value['requirements'],
-		            'checklist' => $value['checklist'],
-		            'evidence' => $value['evidence'],
-		            'comments' => $value['comments'],
-		            'feedback' => $value['feedback']
+		            'slno' => $form_state->getValue(['field_container',$i,'slno']),
+		            'chapter' => $form_state->getValue(['field_container',$i,'chapter']),
+		            'requirements' => $form_state->getValue(['field_container',$i,'requirements']),
+		            'checklist' => $form_state->getValue(['field_container',$i,'checklist']),
+		            'evidence' => $form_state->getValue(['field_container',$i,'evidence']),
+		            'comments' => $form_state->getValue(['field_container',$i,'comments']),
+		            'feedback' => $form_state->getValue(['field_container',$i,'feedback'])
 		        ))
 		        ->execute();
-*/
-
-$insertdtl = db_insert('appinspectiondtl')
-		        ->fields(array(
-		            'appinspformpk' => $insertid,
-		            'slno' => $value->slno,
-		            'chapter' => $value->chapter,
-		            'requirements' => $value->requirements,
-		            'checklist' => $value->checklist,
-		            'evidence' => $value->evidence,
-		            'comments' => $value->comments,
-		            'feedback' => $value->feedback
-		        ))
-		        ->execute();
-
+		if (!$insertdtl) {$transaction->rollback();break;}
 	}
         if (!$insertid) {
             $transaction->rollback();
@@ -123,37 +96,40 @@ $insertdtl = db_insert('appinspectiondtl')
                 ->condition('appinspformpk', $appinspformpk, '=')
                 ->execute();
 
-        foreach ($values['field_container'] as $key => $value) {
-	if (empty($value['appinspdtlpk'])) {
+        for ($i = 0; $i < 100; $i++) {
+		if (empty($form_state->getValue(['field_container',$i,'slno']))) continue;
+	if (empty($form_state->getValue(['field_container',$i,'appinspdtlpk']))) {
 		$insertdtl = db_insert('appinspectiondtl')
 		        ->fields(array(
 		            'appinspformpk' => $appinspformpk,
-		            'slno' => $value['slno'],
-		            'chapter' => $value['chapter'],
-		            'requirements' => $value['requirements'],
-		            'checklist' => $value['checklist'],
-		            'evidence' => $value['evidence'],
-		            'comments' => $value['comments'],
-		            'feedback' => $value['feedback']
+		            'slno' => $form_state->getValue(['field_container',$i,'slno']),
+		            'chapter' => $form_state->getValue(['field_container',$i,'chapter']),
+		            'requirements' => $form_state->getValue(['field_container',$i,'requirements']),
+		            'checklist' => $form_state->getValue(['field_container',$i,'checklist']),
+		            'evidence' => $form_state->getValue(['field_container',$i,'evidence']),
+		            'comments' => $form_state->getValue(['field_container',$i,'comments']),
+		            'feedback' => $form_state->getValue(['field_container',$i,'feedback'])
 		        ))
 		        ->execute();
+		if (!$insertdtl) {$transaction->rollback();break;}
 	}
 	else {
 		$updatedtl = db_update('appinspectiondtl')
 		        ->fields(array(
-		            'chapter' => $value['chapter'],
-		            'requirements' => $value['requirements'],
-		            'checklist' => $value['checklist'],
-		            'evidence' => $value['evidence'],
-		            'comments' => $value['comments'],
-		            'docstatus' => $value['docstatus'],
-		            'compstatus' => $value['compstatus'],
-		            'feedback' => $value['feedback'],
-		            'status' => $value['status']
+		            'chapter' => $form_state->getValue(['field_container',$i,'chapter']),
+		            'requirements' => $form_state->getValue(['field_container',$i,'requirements']),
+		            'checklist' => $form_state->getValue(['field_container',$i,'checklist']),
+		            'evidence' => $form_state->getValue(['field_container',$i,'evidence']),
+		            'comments' => $form_state->getValue(['field_container',$i,'comments']),
+		            'docstatus' => $form_state->getValue(['field_container',$i,'docstatus']),
+		            'compstatus' => $form_state->getValue(['field_container',$i,'compstatus']),
+		            'feedback' => $form_state->getValue(['field_container',$i,'feedback']),
+		            'status' => $form_state->getValue(['field_container',$i,'status'])
 		        ))
 		        ->condition('appinspformpk', $appinspformpk, '=')
-		        ->condition('appinspdtlpk', $value['appinspdtlpk'], '=')
+		        ->condition('appinspdtlpk', $form_state->getValue(['field_container',$i,'appinspdtlpk']), '=')
 		        ->execute();
+		if (!$updatedtl) {$transaction->rollback();break;}
 	}
 	}
         if (!$update) {

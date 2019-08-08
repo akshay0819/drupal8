@@ -5,7 +5,7 @@ namespace Drupal\formmodule\Controller;
 Class Formmodule_biz {
 
     static function getformmoduledet($apmdgpk = NULL, $appformpk = NULL) {
-
+	$result = array();
         if (!empty($apmdgpk)) {
             $headerquery = db_select('appform', 'a');
             $headerquery->fields('a');
@@ -17,7 +17,7 @@ Class Formmodule_biz {
 
         return $result;
     }
-
+    
     static function save_formmodule($form, $form_state, $apmdgpk = '', $apmdgroupname = '') {
         $values = $form_state->getValues();
 	unset($values['submitup']);

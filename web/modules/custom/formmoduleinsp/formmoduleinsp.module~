@@ -1,0 +1,29 @@
+<?php
+
+function formmoduleinsp_theme($existing, $type, $theme, $path) {
+
+  return [
+    'formmoduleinsptheme' => [
+//        'variables' =>
+//           [
+//               'templatefields' => NULL,
+//               'form' => NULL
+//           ],
+        'render element' => 'form',
+        'template' => 'my-formmoduleinsp-name',
+    ],
+  ];
+    
+    
+//    return array(
+//        'formbuildtheme' => array(
+//           'variables' =>
+//                [
+//                    'templatefields' => NULL,
+//                    'form' => NULL
+//                ],
+//            'template' => 'my-formbuild-name',
+//            'render element' => 'form'
+//        ),
+//    );    
+}

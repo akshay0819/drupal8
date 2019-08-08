@@ -38,7 +38,7 @@ forminspection_slab_theme:
   path: '/forminspectiontheme'
   defaults: 
     _controller: '\Drupal\forminspection\Controller\ForminspectionTheme'
-    _title: 'Theme Producmaster Slab'
+    _title: 'Theme Inspection Slab'
   requirements:  
    _permission: 'access content'
 

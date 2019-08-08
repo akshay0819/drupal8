@@ -1,4 +1,7 @@
-formbuildautocomplete:
+forminspection:
   version: 1.x
+  css:
+    base:
+      css/forminspection.css: {}
   js:
-    js/formbuild_autocomplete.js: {}
+    js/forminspection.js: {}

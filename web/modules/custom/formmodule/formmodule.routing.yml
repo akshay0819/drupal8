@@ -35,17 +35,9 @@ formmodule_example_delete:
     _permission: 'access content'  
 
 formmodule_example.autocomplete:
-  path: '/formmodule-product-autocomplete'
+  path: '/formmodule-module-autocomplete'
   defaults:
-    _controller: '\Drupal\formmodule\Controller\AutocompleteController::productAutocomplete'
-    _format: json
-  requirements:
-    _access: 'TRUE'
-    
-formmodule_example.renderform:
-  path: '/addnewformmodule'
-  defaults:
-    _controller: '\Drupal\formmodule\Controller\AutocompleteController::manageAction'
+    _controller: '\Drupal\formmodule\Controller\AutocompleteController::moduleAutocomplete'
     _format: json
   requirements:
     _access: 'TRUE'
