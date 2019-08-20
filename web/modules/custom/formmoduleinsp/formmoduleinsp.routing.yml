@@ -9,7 +9,7 @@ formmoduleinsp_example.form:
     
 
 formmoduleinsp_example_edit: 
-  path: '/formmoduleinsp/edit/{appinspformpk}/{appformpk}'
+  path: '/formmoduleinsp/edit/{appinspformpk}/{appinspdtlpk}'
   defaults: 
     _form: '\Drupal\formmoduleinsp\Form\FormmoduleinspForm'
     _title: 'Edit Inspection Form'
@@ -18,7 +18,7 @@ formmoduleinsp_example_edit:
     _permission: 'access content'  
 
 formmoduleinsp_example_display: 
-  path: '/formmoduleinsp/display/{appinspformpk}/{appformpk}'
+  path: '/formmoduleinsp/display/{appinspformpk}/{appinspdtlpk}'
   defaults: 
     _form: '\Drupal\formmoduleinsp\Form\FormmoduleinspForm'
     _title: 'Display Inspection Form'
@@ -27,7 +27,7 @@ formmoduleinsp_example_display:
     _permission: 'access content'  
 
 formmoduleinsp_example_delete: 
-  path: '/formmoduleinsp/delete/{appinspformpk}/{appformpk}'
+  path: '/formmoduleinsp/delete/{appinspformpk}/{appinspdtlpk}'
   defaults: 
     _form: 'Drupal\formmoduleinsp\Form\Deleteformmoduleinsp'
     _title: 'Delete Inspection Form'

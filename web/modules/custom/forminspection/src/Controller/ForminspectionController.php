@@ -13,10 +13,10 @@ Class ForminspectionController {
         $header = array(
             'appinspformid' => t('Inspection ID'),
             'appinspformname' => t('Form Name'),
-            'appinspauditor' => t('Auditee User'),
-            'appinspauditee' => t('Audited User'),
+            'appinspauditor' => t('Auditor'),
+            'appinspauditee' => t('Auditee'),
             'appauditdate' => t('Audit Date'),
-            'appinspstatus' => t('Status'),
+            'appinspstatus' => t('GoTo'),
             'operations' => t('Edit'),
             'deletecomp' => t('Delete'),
         );
@@ -36,7 +36,7 @@ Class ForminspectionController {
         $link_options_delete = array('attributes' => array('class' => array('btn', 'btn-danger'),),);
         foreach ($getlist as $item) {
             $idarray = array('appinspformpk' => $item->appinspformpk);
-            $goto_forminspection = CustomUtils::editButton('formmoduleinsp_example.form', $idarray, 'extrasmall', 'GoTo Form');
+            $goto_forminspection = CustomUtils::editButton('formmoduleinsp_example.list', $idarray, 'extrasmall', 'GoTo Form');
             $edit_forminspection = CustomUtils::editButton('forminspection_example_edit', $idarray, 'extrasmall', 'Edit');
             $delete_forminspection = CustomUtils::deleteButton('forminspection_example_delete', $idarray, 'extrasmall', 'Delete');
             $dispurl = Url::fromRoute('forminspection_example_display', array('appinspformpk' => $item->appinspformpk));
@@ -44,7 +44,7 @@ Class ForminspectionController {
 
             // Row with attributes on the row and some of its cells.
             $rows[] = array(
-                'data' => array($display_forminspection, $item->appinspformname, $item->appinspauditor, $item->appinspauditee, date('m / d / Y', strtotime($item->appauditdate)), $item->appinspstatus, $edit_forminspection, $delete_forminspection)
+                'data' => array($display_forminspection, $item->appinspformname, $item->appinspauditor, $item->appinspauditee, date('m / d / Y', strtotime($item->appauditdate)), $goto_forminspection, $edit_forminspection, $delete_forminspection)
             );
         }
 

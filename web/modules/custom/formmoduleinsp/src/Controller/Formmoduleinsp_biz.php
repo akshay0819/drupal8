@@ -4,13 +4,13 @@ namespace Drupal\formmoduleinsp\Controller;
 
 Class Formmoduleinsp_biz {
 
-    static function getformmoduleinspdet($appinspformpk = NULL, $appformpk = NULL) {
+    static function getformmoduleinspdet($appinspformpk = NULL, $appinspdtlpk = NULL) {
 	$result = array();
         if (!empty($appinspformpk)) {
-            $headerquery = db_select('appform', 'a');
+            $headerquery = db_select('appinspectiondtl', 'a');
             $headerquery->fields('a');
-            $headerquery->condition('appformid', $appinspformpk, '=');
-            $headerquery->condition('appformpk', $appformpk, '=');
+            $headerquery->condition('appinspformpk', $appinspformpk, '=');
+            $headerquery->condition('appinspdtlpk', $appinspdtlpk, '=');
             $result = $headerquery->execute()->fetchAssoc();
 
         }
@@ -46,28 +46,34 @@ Class Formmoduleinsp_biz {
 
 
 
-    static function edit_formmoduleinsp($form, $form_state, $appinspformpk = '', $appformpk = '') {
+    static function edit_formmoduleinsp($form, $form_state, $appinspformpk = '', $appinspdtlpk = '') {
 
         $values = $form_state->getValues();
-        //DbTransaction
-	unset($values['submitup']);
-        unset($values['submit']);
-        unset($values['form_build_id']);
-        unset($values['form_token']);
-        unset($values['form_id']);
-        unset($values['op']);
-
+        
         $transaction = db_transaction();
 
-        $update = db_update('appform')
+        $update = db_update('appinspectiondtl')
                 ->fields(array(
-                    'appgroupfields' => json_encode($values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT),
-                    'updatedby' => \Drupal::currentUser()->id(),
-		    'updatedtime' => date('Y-m-d H:i:s', time())
+                    'chapter' => $values['chapter'],
+                    'requirements' => $values['requirements'],
+                    'checklist' => $values['checklist'],
+                    'evidence' => $values['evidence'],
+                    'comments' => $values['comments'],
+                    'docstatus' => $values['docstatus'],
+                    'compstatus' => $values['compstatus'],
+                    'feedback' => $values['feedback'],
+                    'status' => $values['status']
                 ))
-            //    ->condition('appformid', $appinspformpk, '=')
-                ->condition('appformpk', $appformpk, '=')
+                ->condition('appinspdtlpk', $appinspdtlpk, '=')
                 ->execute();
+	$validators = array(
+                'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
+            );
+            $uri = 'public://';
+            if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
+                $file_content = file_get_contents($file->filepath);
+            }
+        
 
         if (!$update) {
             $transaction->rollback();
@@ -76,9 +82,9 @@ Class Formmoduleinsp_biz {
         }
     }
 
-    static function delete_formmoduleinsp($appformpk) {
+    static function delete_formmoduleinsp($appinspdtlpk) {
         db_delete('appform')
-                ->condition('appformpk', $appformpk)
+                ->condition('appinspdtlpk', $appinspdtlpk)
                 ->execute();
     }
 

@@ -28,10 +28,10 @@ class FormmoduleinspForm extends FormBase {
     }
 
 
-    public function buildForm(array $form, FormStateInterface $form_state, $formmode = '', $appinspformpk = '', $appformpk = '') {
+    public function buildForm(array $form, FormStateInterface $form_state, $formmode = '', $appinspformpk = '', $appinspdtlpk = '') {
 
         $this->appinspformpk = $appinspformpk;
-        $this->appformpk = $appformpk;
+        $this->appinspdtlpk = $appinspdtlpk;
         $this->formmode = $formmode;
         $display_mode = FALSE;
         if ($this->formmode == 'DISPLAY') {
@@ -39,13 +39,14 @@ class FormmoduleinspForm extends FormBase {
             $this->display_mode = TRUE;
         }
 
-        $formmoduleinspdet = Formmoduleinsp_biz::getformmoduleinspdet($appinspformpk, $appformpk);
+        $formmoduleinspdet = Formmoduleinsp_biz::getformmoduleinspdet($appinspformpk, $appinspdtlpk);
 
         $query = db_select('appinspectionform', 'a');
         $query->fields('a');
         $query->condition('appinspformpk', $appinspformpk, '=');
         $result = $query->execute()->fetchAssoc();
-	$form['formtitle'] = [
+	$this->appinspformname = $result['appinspformname'];
+        $form['formtitle'] = [
             '#markup' => '<i class="fa fa-gift"></i> &nbsp;'. $result['appinspformname'] .' Info',
             '#prefix' => '<div class="kt-portlet__head"><div class="kt-portlet__head-label">',
             '#suffix' => '</div></div>',
@@ -65,7 +66,7 @@ class FormmoduleinspForm extends FormBase {
         ];
 	}
         else {
-	$edit_formfields = CustomUtils::addButton('formmoduleinsp_example_edit', array('appinspformpk' => $appinspformpk, 'appformpk' => $appformpk), 'medium', 'Edit '. $result['appinspformname'] . ' Form');
+	$edit_formfields = CustomUtils::addButton('formmoduleinsp_example_edit', array('appinspformpk' => $appinspformpk, 'appinspdtlpk' => $appinspdtlpk), 'medium', 'Edit '. $result['appinspformname'] . ' Form');
         
         $form['buttons']['submitedit'] = [
             '#markup' => $edit_formfields,
@@ -103,21 +104,94 @@ class FormmoduleinspForm extends FormBase {
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>',
         ];
-        $query = db_select('appinspectiondtl', 'a');
-        $query->fields('a');
-        $query->condition('appinspformpk', $appinspformpk, '=');
-        
+        $form['chapter'] = [
+                '#type' => 'textarea',
+                '#title' => t('Chapter No'),
+                '#default_value' => $formmoduleinspdet['chapter'],
+		'#attributes' =>  ['readonly' => 'readonly'], 
+            	'#prefix' => '<div class="row"><div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
 
-        $getlist = $query->execute();
-       
-        $i = 0;
-	foreach ($getlist as $fld) {
-	   $form['h'. $i] = ['#type' => 'details', '#title' => $fld->chapter, '#open' => TRUE];
-	   $form['h'. $i]['requirements'] = ['#markup' => nl2br($fld->requirements).(!empty($fld->requirements) ? '<br />' : '')];
-	   $form['h'. $i]['checklist'] = ['#markup' => nl2br($fld->checklist)];
-	   $form['h'. $i]['text'.$i] = ['#type' => 'textfield', '#placeholder' => 'Short answer text', '#maxlength' => 1000];
-	   $i++;
-	}
+            $form['requirements'] = [
+                '#type' => 'textarea',
+                '#title' => t('Requirements'),
+                '#default_value' =>$formmoduleinspdet['requirements'],
+                '#attributes' =>  ['readonly' => 'readonly'], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+
+	    $form['checklist'] = [
+                '#type' => 'textarea',
+                '#title' => t('Checklist'),
+                '#default_value' => $formmoduleinspdet['checklist'],
+                '#attributes' =>  ['readonly' => 'readonly'], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+
+	    $form['evidence'] = [
+                '#type' => 'textarea',
+                '#title' => t('Evidence'),
+                '#default_value' => $formmoduleinspdet['evidence'],
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+
+	    $form['comments'] = [
+                '#type' => 'textarea',
+                '#title' => t('Comments'),
+                '#default_value' => $formmoduleinspdet['comments'],
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+
+	    $form['feedback'] = [
+                '#type' => 'textarea',
+                '#title' => t('Feedback'),
+                '#default_value' => $formmoduleinspdet['feedback'],
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+	    $form['docstatus'] = [
+                '#type' => 'range',
+                '#title' => t('Document Status'),
+                '#default_value' => $formmoduleinspdet['docstatus'],
+		//'#options' => [0,100],
+                '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+	    $form['compstatus'] = [
+                '#type' => 'range',
+                '#title' => t('Completion Status'),
+                '#default_value' => $formmoduleinspdet['compstatus'],
+                '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+            	'#prefix' => '<div class="col-md-6">',
+                '#suffix' => '</div>',
+            ];
+	$options = ['Closed' => 'Closed', 'Open' => 'Open'];
+	$form['status'] = [
+            '#type' => isset($this->display_mode) ? 'textfield' : 'select',
+            '#title' => $this->t('Status'),
+	    '#options' => $options,
+            '#default_value' =>$formmoduleinspdet['status'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	$form['attachment'] = [
+            '#type' => 'file',
+            '#title' => t('Attachment'),
+            '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+            '#upload_location' => 'public://items',
+	    '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div></div>',
+        ];
 	if (!isset($this->display_mode)) {
 	$form['submit'] = [
             '#type' => 'submit',
@@ -127,7 +201,7 @@ class FormmoduleinspForm extends FormBase {
         ];
 	}
         else {
-	$edit_formfields = CustomUtils::addButton('formmoduleinsp_example_edit', array('appinspformpk' => $appinspformpk, 'appformpk' => $appformpk), 'medium', 'Edit '. $result['appinspformname'] . ' Form');
+	$edit_formfields = CustomUtils::addButton('formmoduleinsp_example_edit', array('appinspformpk' => $appinspformpk, 'appinspdtlpk' => $appinspdtlpk), 'medium', 'Edit '. $result['appinspformname'] . ' Form');
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
@@ -211,16 +285,16 @@ class FormmoduleinspForm extends FormBase {
                 if ($returnval == 'FAIL') {                    
                 } else {
                     drupal_set_message(t("Formmoduleinsp Saved Successfully"));
-                    $form_state->setRedirect('formmoduleinsp_example_display', array('appinspformpk' => $this->appinspformpk, 'appformpk' => $returnval));
+                    $form_state->setRedirect('formmoduleinsp_example_display', array('appinspformpk' => $this->appinspformpk, 'appinspdtlpk' => $returnval));
                 }
                 break;
             case 'EDIT':
-                $returnval = Formmoduleinsp_biz::edit_formmoduleinsp($form, $form_state, $this->appinspformpk, $this->appformpk);
+                $returnval = Formmoduleinsp_biz::edit_formmoduleinsp($form, $form_state, $this->appinspformpk, $this->appinspdtlpk);
                 if ($returnval == 'FAIL') {
                     
                 } else {
-                    drupal_set_message(t("Formmoduleinsp Updated Successfully"));
-                    $form_state->setRedirect('formmoduleinsp_example_display', array('appinspformpk' => $this->appinspformpk, 'appformpk' => $this->appformpk));
+                    drupal_set_message(t($this->appinspformname. " Form Updated Successfully"));
+                    $form_state->setRedirect('formmoduleinsp_example_display', array('appinspformpk' => $this->appinspformpk, 'appinspdtlpk' => $this->appinspdtlpk));
                 }
                 break;
             default:
