@@ -16,7 +16,7 @@ Class ForminspectionController {
             'appinspauditor' => t('Auditee User'),
             'appinspauditee' => t('Audited User'),
             'appauditdate' => t('Audit Date'),
-            'appinspstatus' => t('GoTo'),
+            'appinspstatus' => t('Status'),
             'operations' => t('Edit'),
             'deletecomp' => t('Delete'),
         );
@@ -44,7 +44,7 @@ Class ForminspectionController {
 
             // Row with attributes on the row and some of its cells.
             $rows[] = array(
-                'data' => array($display_forminspection, $item->appinspformname, $item->appinspauditor, $item->appinspauditee, date('m / d / Y', strtotime($item->appauditdate)), $goto_forminspection, $edit_forminspection, $delete_forminspection)
+                'data' => array($display_forminspection, $item->appinspformname, $item->appinspauditor, $item->appinspauditee, date('m / d / Y', strtotime($item->appauditdate)), $item->appinspstatus, $edit_forminspection, $delete_forminspection)
             );
         }
 

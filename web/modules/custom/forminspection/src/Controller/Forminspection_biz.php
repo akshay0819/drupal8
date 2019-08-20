@@ -1,6 +1,7 @@
 <?php
 
 namespace Drupal\forminspection\Controller;
+use Drupal\file\Entity\File;
 
 Class Forminspection_biz {
 
@@ -47,7 +48,13 @@ Class Forminspection_biz {
                     'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
-
+	    $validators = array(
+                'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
+            );
+            $uri = 'public://';
+            if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
+                $file_content = file_get_contents($file->filepath);
+            }
 	for ($i = 0; $i < 100; $i++) {
 		if (empty($form_state->getValue(['field_container',$i,'slno']))) continue;
 		$insertdtl = db_insert('appinspectiondtl')
@@ -95,7 +102,13 @@ Class Forminspection_biz {
                 ))
                 ->condition('appinspformpk', $appinspformpk, '=')
                 ->execute();
-
+	$validators = array(
+                'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
+            );
+            $uri = 'public://';
+            if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
+                $file_content = file_get_contents($file->filepath);
+            }
         for ($i = 0; $i < 100; $i++) {
 		if (empty($form_state->getValue(['field_container',$i,'slno']))) continue;
 	if (empty($form_state->getValue(['field_container',$i,'appinspdtlpk']))) {

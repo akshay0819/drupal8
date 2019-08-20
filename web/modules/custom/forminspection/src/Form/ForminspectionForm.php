@@ -11,6 +11,7 @@ use Drupal\Core\Link;
 use Drupal\customutil\CustomUtils;
 use Drupal\forminspection\Controller\Forminspection_biz;
 use Drupal\forminspection\Controller\AutocompleteController;
+use Drupal\file\Entity\File;
 
 
 /**
@@ -58,7 +59,7 @@ class ForminspectionForm extends FormBase {
 	$form['submitup'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -67,7 +68,7 @@ class ForminspectionForm extends FormBase {
 
         $form['buttons']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
@@ -99,77 +100,59 @@ class ForminspectionForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => isset($this->display_mode) ? '</div></div></div><div class="col-md-6"></div>' : '</div></div></div>',
+            '#suffix' => isset($this->display_mode) ? '</div></div></div></div>' : '</div></div></div></div>',
         ];
-        $form['appinspformid'] = [
-            '#type' => 'textfield',
-            '#title' => $this->t('Inspection Form Id'),
-            '#default_value' =>  ($form_state->getValue('appinspformid') != false)? $form_state->getValue('appinspformid') :$forminspectiondet['appinspformid'],
-	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
+	$form['formcoverstart']['#markup'] = '<div class="kt-portlet">';
+        $form['formbody']['#markup'] = '<div class="kt-portlet__body">';
+        
+        $form['tabs'] = [
+            '#markup' => '',
+            '#prefix' => '<ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand" role="tablist">',
+            '#suffix' => '</ul>',
         ];
-
-        $form['appinspformname'] = [
-            '#type' => 'textfield',
-            '#title' => $this->t('Form Name'),
-            '#default_value' => ($form_state->getValue('appinspformname') != false)? $form_state->getValue('appinspformname') :$forminspectiondet['appinspformname'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
+        $form['tabs']['one'] = [
+            '#markup' => '<a class="nav-link active" data-toggle="tab" href="#kt_tabs_2_1">Audit</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
         ];
-
-	$form['appinspauditor'] = [
-            '#type' => 'textfield',
-            '#title' => $this->t('Auditee User'),
-            '#default_value' => ($form_state->getValue('appinspauditor') != false)? $form_state->getValue('appinspauditor') :$forminspectiondet['appinspauditor'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
+        $form['tabs']['two'] = [
+            '#markup' => '<a class="nav-link" data-toggle="tab" href="#kt_tabs_2_2">Feedback</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
+        ];
+        $form['tabs']['three'] = [
+            '#markup' => '<a class="nav-link" data-toggle="tab" href="#kt_tabs_2_3">Completed</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
         ];
 
-	$form['appinspauditee'] = [
-            '#type' => 'textfield',
-            '#title' => $this->t('Audited User'),
-            '#default_value' => ($form_state->getValue('appinspauditee') != false)? $form_state->getValue('appinspauditee') :$forminspectiondet['appinspauditee'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
+        $form['tabscontent'] = [
+//            '#markup' => '',
+            '#prefix' => '<div class="tab-content">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['one'] = [
+//            '#markup' =>  '',
+            '#prefix' => '<div class="tab-pane active" id="kt_tabs_2_1" role="tabpanel">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['two'] = [
+//            '#markup' =>  '',
+            '#prefix' => '<div class="tab-pane" id="kt_tabs_2_2" role="tabpanel">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['three'] = [
+            '#markup' => '',
+            '#prefix' => '<div class="tab-pane" id="kt_tabs_2_3" role="tabpanel">',
+            '#suffix' => '</div>',
         ];
 
-	$form['appauditdate'] = [
-            '#type' => 'date',
-            '#title' => $this->t('Audit Date'),
-            '#default_value' => ($form_state->getValue('appauditdate') != false)? $form_state->getValue('appauditdate') : (!empty($forminspectiondet['appauditdate']) ? date('Y-m-d', strtotime($forminspectiondet['appauditdate'])) : date('Y-m-d')),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
-        ];
-	$form['appinspstatus'] = [
-            '#type' => 'textfield',
-            '#title' => $this->t('Inspection Status'),
-            '#default_value' => ($form_state->getValue('appinspstatus') != false)? $form_state->getValue('appinspstatus') :$forminspectiondet['appinspstatus'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
-        ];
-	$form['appinspcomments'] = [
-            '#type' => 'textarea',
-            '#title' => $this->t('Auditee Comments'),
-            '#default_value' => ($form_state->getValue('appinspcomments') != false)? $form_state->getValue('appinspcomments') :$forminspectiondet['appinspcomments'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
-        ];
-	$form['appinspfeedback'] = [
-            '#type' => 'textarea',
-            '#title' => $this->t('Auditor Feedback'),
-            '#default_value' => ($form_state->getValue('appinspfeedback') != false)? $form_state->getValue('appinspfeedback') :$forminspectiondet['appinspfeedback'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
-        ];
-	$form['field_container'] = array(
+        $form['tabscontent']['one']['productinfo1'] = $this->inspectiontab1($forminspectiondet);
+        $form['tabscontent']['two']['productinfo2'] = $this->inspectiontab2($forminspectiondet);
+        $form['tabscontent']['three']['productinfo3'] = $this->inspectiontab3($forminspectiondet);
+        $form['formbodyend']['#markup'] = '</div>';
+        $form['formcoverend']['#markup'] = '</div>';
+        $form['field_container'] = array(
             '#type' => 'container',
             '#tree' => TRUE,
             '#prefix' => '<div id="js-ajax-elements-wrapper">',
@@ -225,7 +208,8 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('ChapterNo'),
                 '#default_value' => $details[$delta]->chapter,
-		'#prefix' => '<div class="col-md-2 col-sm-10">',
+		'#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -233,7 +217,8 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Requirements'),
                 '#default_value' => $details[$delta]->requirements,
-                '#prefix' => '<div class="col-md-2 col-sm-10">',
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -241,7 +226,8 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Checklist'),
                 '#default_value' => $details[$delta]->checklist,
-                '#prefix' => '<div class="col-md-2 col-sm-10">',
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -249,7 +235,8 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Evidence'),
                 '#default_value' => $details[$delta]->evidence,
-                '#prefix' => '<div class="col-md-2 col-sm-10">',
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -257,7 +244,8 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Comments'),
                 '#default_value' => $details[$delta]->comments,
-                '#prefix' => '<div class="col-md-2 col-sm-10">',
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 
@@ -265,7 +253,8 @@ class ForminspectionForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Feedback'),
                 '#default_value' => $details[$delta]->feedback,
-                '#prefix' => '<div class="col-md-2 col-sm-10">',
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 	    if (!isset($this->display_mode)) {
@@ -291,7 +280,7 @@ class ForminspectionForm extends FormBase {
 	$form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -300,7 +289,7 @@ class ForminspectionForm extends FormBase {
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
@@ -324,16 +313,124 @@ class ForminspectionForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>',
+            '#suffix' => '</div></div></div></div>',
         ];
         $form['formbodyend'] = [
             '#markup' => '</form></div></div>'
         ];
 
 
+        $form['#attributes']['enctype'] = 'multipart/form-data';
         $form['#attached']['library'][] = 'forminspection/forminspection';
         return $form;
     }
+    public function inspectiontab1($forminspectiondet) {
+
+        $form['appinspformid'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Inspection Form Id'),
+            '#default_value' =>  $forminspectiondet['appinspformid'],
+	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="row"><div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+
+        $form['appinspformname'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Form Name'),
+            '#default_value' => $forminspectiondet['appinspformname'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+
+	$form['appinspauditor'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Auditee User'),
+            '#default_value' => $forminspectiondet['appinspauditor'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+
+	$form['appinspauditee'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Audited User'),
+            '#default_value' => $forminspectiondet['appinspauditee'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+
+	$form['appauditdate'] = [
+            '#type' => 'date',
+            '#title' => $this->t('Audit Date'),
+            '#default_value' => (!empty($forminspectiondet['appauditdate']) ? date('Y-m-d', strtotime($forminspectiondet['appauditdate'])) : date('Y-m-d')),
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	$options = ['Create' => 'Create', 'Audit' => 'Audit', 'Feedback' => 'Feedback', 'Completed' => 'Completed'];
+	$form['appinspstatus'] = [
+            '#type' => isset($this->display_mode) ? 'textfield' : 'select',
+            '#title' => $this->t('Inspection Status'),
+	    '#options' => $options,
+            '#default_value' =>$forminspectiondet['appinspstatus'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	$form['appinspcomments'] = [
+            '#type' => 'textarea',
+            '#title' => $this->t('Auditee Comments'),
+            '#default_value' => $forminspectiondet['appinspcomments'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	$form['appinspfeedback'] = [
+            '#type' => 'textarea',
+            '#title' => $this->t('Auditor Feedback'),
+            '#default_value' => $forminspectiondet['appinspfeedback'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div></div>'
+        ];
+	
+
+        return $form;
+    }
+
+    public function inspectiontab2($forminspectiondet) {
+
+        $form['attachment'] = [
+            '#type' => 'file',
+            '#title' => t('Attachment'),
+            '#prefix' => '<div class="row"><div class="col-md-12 col-sm-12">',
+            '#suffix' => '</div></div>',
+	    '#upload_location' => 'public://items'
+	];
+        return $form;
+    }
+
+    public function inspectiontab3($forminspectiondet) {
+       // $prodtypes = Product_utils::productmaster_get_producttypes('ACCT');
+
+
+        $form['date'] = [
+            '#title' => $this->t('Date'),
+            '#type' => 'date',
+            '#attributes' => array('type' => 'date', 'min' => '-25 years', 'max' => '+5 years'),
+            '#date_format' => 'd/m/Y',
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#prefix' => '<div class="col-md-6 col-sm-12">',
+            '#suffix' => '</div></div>',
+        ];
+
+
+        return $form;
+    }
+
      /**
      * @param array $form
      * @param \Drupal\Core\Form\FormStateInterface $form_state
