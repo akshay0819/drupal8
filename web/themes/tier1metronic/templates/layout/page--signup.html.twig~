@@ -66,7 +66,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background: url({{base_path}}/themes/tier1metronic/eximdesk-bg.png);
+	background: #ffffff;
 	border-radius: 10px;
 	box-shadow: 7px 7px 5px #bfc7c8;
     }
@@ -113,8 +113,8 @@
                                                                         {{ page.content }}
 									<div class="forget-password">
     <p>Forgot your password? Click <a href="{{base_path}}user/password" title="Click here to reset password" id="forget-password">here</a></p>
-  </div><a href="{{base_path}}signup" type="button" id="back-btn" class="btn btn-label btn-label-brand btn-sm btn-bold">
-      <i class="m-icon-swapleft"></i> Register
+  </div><a href="{{base_path}}user/login" type="button" id="back-btn" class="btn btn-label btn-label-brand btn-sm btn-bold">
+      <i class="m-icon-swapleft"></i> Log in
     </a>
                                                                     {% endif %}
                                                                 </div>
