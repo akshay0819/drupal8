@@ -161,7 +161,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'range',
                 '#title' => t('Document Status'),
                 '#default_value' => $formmoduleinspdet['docstatus'],
-		'#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+		'#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : ['onmouseover' => '$(this).attr("title", this.value);'], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -169,7 +169,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'range',
                 '#title' => t('Completion Status'),
                 '#default_value' => $formmoduleinspdet['compstatus'],
-                '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : ['onmouseover' => '$(this).attr("title", this.value);'], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];

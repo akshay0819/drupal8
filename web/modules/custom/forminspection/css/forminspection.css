@@ -12,3 +12,8 @@
     flex: 0 0 14.667%;
     max-width: 14.66667%;
 }
+#formmodulelistinsp-example-form #js-ajax-elements-wrapper {
+    height: 850px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
