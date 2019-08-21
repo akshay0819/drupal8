@@ -43,7 +43,7 @@ Class Signup extends FormBase {
         $form['main'] = [
             '#type' => 'fieldset',
           //  '#title' => t('User Details'),
-          //  '#group' => 'productinformation',
+            '#group' => 'productinformation',
             '#prefix' => '<div id="container">',
             '#suffix' => '</div>',
         ];
