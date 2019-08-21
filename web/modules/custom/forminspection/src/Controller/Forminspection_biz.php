@@ -45,7 +45,7 @@ Class Forminspection_biz {
                     'appinspstatus' => $values['appinspstatus'],
                     'appinspcomments' => $values['appinspcomments'],
                     'appinspfeedback' => $values['appinspfeedback'],
-                    'createdby' => \Drupal::currentUser()->id()
+                    'createdby' => \Drupal::currentUser()->id() 
                 ))
                 ->execute();
 	    $validators = array(

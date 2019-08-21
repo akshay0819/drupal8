@@ -106,7 +106,7 @@ Class Forminspection_biz {
                 'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
             );
             $uri = 'public://';
-            if ($file = file_save_upload('attachment', $validators, $uri . "files/")) {
+            if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
                 $file_content = file_get_contents($file->filepath);
             }
         for ($i = 0; $i < 100; $i++) {
