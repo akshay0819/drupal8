@@ -22,7 +22,7 @@ Class FormmoduleinspController {
             'appinspauditee' => t('Auditee'),
             'appauditdate' => t('Audit Date'),
             'appinspstatus' => t('Status'),
-            'operations' => t('Edit'),
+        //    'operations' => t('Edit'),
         //    'deletecomp' => t('Delete'),
         );
 
@@ -116,8 +116,7 @@ Class FormmoduleinspController {
         $query->fields('b');
         $query->condition('a.appinspformpk', $appinspformpk, '=');
         $query->condition('a.appinspstatus', $appstatus, '=');
-        
-
+        $query->range(0, 1);
         $getlist = $query->execute();
        
 
@@ -125,15 +124,15 @@ Class FormmoduleinspController {
         $link_options = array('attributes' => array('class' => array('btn btn-xs default btn-editable'),),);
         $link_options_delete = array('attributes' => array('class' => array('btn', 'btn-danger'),),);
         foreach ($getlist as $item) {
-            $idarray = array('appinspformpk' => $item->appinspformpk, 'appinspdtlpk' => $item->appinspdtlpk);
-            $edit_forminspection = CustomUtils::editButton('formmoduleinsp_example_edit', $idarray, 'extrasmall', 'Edit');
+       //     $idarray = array('appinspformpk' => $item->appinspformpk, 'appinspdtlpk' => $item->appinspdtlpk);
+       //     $edit_forminspection = CustomUtils::editButton('formmoduleinsp_example_edit', $idarray, 'extrasmall', 'Edit');
           //  $delete_forminspection = CustomUtils::deleteButton('forminspection_example_delete', $idarray, 'extrasmall', 'Delete');
-            $dispurl = Url::fromRoute('formmoduleinsp_example_display', array('appinspformpk' => $item->appinspformpk, 'appinspdtlpk' => $item->appinspdtlpk));
+            $dispurl = Url::fromRoute('formmodulelistinsp_example_display', array('appinspformpk' => $item->appinspformpk));
             $display_forminspection = \Drupal::l(t($item->appinspformid), $dispurl);
 
             // Row with attributes on the row and some of its cells.
             $rows[] = array(
-                'data' => array($display_forminspection, $item->appinspformname, $item->appinspauditor, $item->appinspauditee, date('m / d / Y', strtotime($item->appauditdate)), $item->appinspstatus, $edit_forminspection)
+                'data' => array($display_forminspection, $item->appinspformname, $item->appinspauditor, $item->appinspauditee, date('m / d / Y', strtotime($item->appauditdate)), $item->appinspstatus)
             );
         }
 	$form['tablebody']['company_table'] = array(

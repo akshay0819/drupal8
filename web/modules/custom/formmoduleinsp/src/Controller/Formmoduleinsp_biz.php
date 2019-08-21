@@ -17,9 +17,33 @@ Class Formmoduleinsp_biz {
 
         return $result;
     }
-    
+    static function getforminspectionlistdet($forminspectionpk = NULL) {
+	$result = array();
+        if (!empty($forminspectionpk)) {
+            $headerquery = db_select('appinspectionform', 'a');
+            $headerquery->fields('a');
+            $headerquery->condition('appinspformpk', $forminspectionpk, '=');
+            $result = $headerquery->execute()->fetchAssoc();
+
+        }
+
+        return $result;
+    }
+    static function getforminspectionlistdtl($forminspectionpk = NULL) {
+        $result = array();
+        if (!empty($forminspectionpk)) {
+            $headerquery = db_select('appinspectiondtl', 'a');
+            $headerquery->fields('a');
+            $headerquery->condition('appinspformpk', $forminspectionpk, '=');
+            $result = $headerquery->execute()->fetchAll();
+
+        }
+
+        return $result;
+    }
+
     static function save_formmoduleinsp($form, $form_state, $appinspformpk = '', $apmdgroupname = '') {
-        $values = $form_state->getValues();
+       /* $values = $form_state->getValues();
 	unset($values['submitup']);
         unset($values['submit']);
         unset($values['form_build_id']);
@@ -41,7 +65,7 @@ Class Formmoduleinsp_biz {
             $transaction->rollback();
         } else {
             return $insertid;
-        }
+        }*/return;
    }
 
 

@@ -26,6 +26,15 @@ formmoduleinsp_example_display:
   requirements:  
     _permission: 'access content'  
 
+formmodulelistinsp_example_display: 
+  path: '/formmodulelistinsp/display/{appinspformpk}'
+  defaults: 
+    _form: '\Drupal\formmoduleinsp\Form\FormmoduleinspListForm'
+    _title: 'Display Inspection Form'
+    formmode: 'DISPLAY'
+  requirements:  
+    _permission: 'access content'  
+
 formmoduleinsp_example_delete: 
   path: '/formmoduleinsp/delete/{appinspformpk}/{appinspdtlpk}'
   defaults: 

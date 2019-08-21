@@ -26,6 +26,15 @@ forminspection_example_display:
   requirements:  
     _permission: 'access content'  
 
+forminspections_example_display: 
+  path: '/forminspections/display/{appinspformpk}'
+  defaults: 
+    _form: '\Drupal\forminspection\Form\ForminspectionForm'
+    _title: 'Display Inspection'
+    formmode: 'DISPLAYS'
+  requirements:  
+    _permission: 'access content'  
+
 forminspection_example_delete: 
   path: '/forminspection/delete/{appinspformpk}'
   defaults: 
@@ -46,14 +55,6 @@ forminspection_example.autocomplete:
   path: '/forminspection-md-autocomplete'
   defaults:
     _controller: '\Drupal\forminspection\Controller\AutocompleteController::inspAutocomplete'
-    _format: json
-  requirements:
-    _access: 'TRUE'
-    
-forminspection_example.renderform:
-  path: '/addnewforminspection'
-  defaults:
-    _controller: '\Drupal\forminspection\Controller\AutocompleteController::manageAction'
     _format: json
   requirements:
     _access: 'TRUE'

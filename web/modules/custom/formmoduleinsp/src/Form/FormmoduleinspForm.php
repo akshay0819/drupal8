@@ -75,7 +75,7 @@ class FormmoduleinspForm extends FormBase {
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
         ];
-	$add_formfields = CustomUtils::addButton('formmoduleinsp_example.form', array('appinspformpk' => $appinspformpk), 'medium', 'Add '. $result['appinspformname'] . ' Form');
+	/*$add_formfields = CustomUtils::addButton('formmoduleinsp_example.form', array('appinspformpk' => $appinspformpk), 'medium', 'Add '. $result['appinspformname'] . ' Form');
 
         $form['buttons']['submitadd'] = [
             '#markup' => $add_formfields,
@@ -83,7 +83,7 @@ class FormmoduleinspForm extends FormBase {
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
-        ];
+        ];*/
 	}
         $link_options = array(
             'attributes' => array(
@@ -93,7 +93,7 @@ class FormmoduleinspForm extends FormBase {
                 ),
             ),
         );
-        $url = Url::fromRoute('formmoduleinsp_example.list', array('appinspformpk' => $appinspformpk));
+        $url = Url::fromRoute('formmodulelistinsp_example_display', array('appinspformpk' => $appinspformpk));
         $url->setOptions($link_options);
         $cancel_formmoduleinsplink = \Drupal::l(t('Cancel'), $url);
 
@@ -135,7 +135,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Evidence'),
                 '#default_value' => $formmoduleinspdet['evidence'],
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  ['readonly' => 'readonly'], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -161,8 +161,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'range',
                 '#title' => t('Document Status'),
                 '#default_value' => $formmoduleinspdet['docstatus'],
-		//'#options' => [0,100],
-                '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+		'#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -208,7 +207,7 @@ class FormmoduleinspForm extends FormBase {
             '#prefix' => ($i % 2 == 0) ? '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">' : '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
         ];
-	$add_formfields = CustomUtils::addButton('formmoduleinsp_example.form', array('appinspformpk' => $appinspformpk), 'medium', 'Add '. $result['appinspformname'] . ' Form');
+	/*$add_formfields = CustomUtils::addButton('formmoduleinsp_example.form', array('appinspformpk' => $appinspformpk), 'medium', 'Add '. $result['appinspformname'] . ' Form');
 
         $form['actions']['submitadd'] = [
             '#markup' => $add_formfields,
@@ -216,9 +215,9 @@ class FormmoduleinspForm extends FormBase {
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
-        ];
+        ];*/
 	}
-        $url = Url::fromRoute('formmoduleinsp_example.list', array('appinspformpk' => $appinspformpk));
+        $url = Url::fromRoute('formmodulelistinsp_example_display', array('appinspformpk' => $appinspformpk));
         $url->setOptions($link_options);
         $cancel_formmoduleinsplink = \Drupal::l(t('Cancel'), $url);
 
@@ -233,8 +232,8 @@ class FormmoduleinspForm extends FormBase {
             '#markup' => '</form></div></div>'
         ];
 
-
-        $form['#attached']['library'][] = 'formmoduleinsp/formmoduleinsplib';
+	$form['#attributes']['enctype'] = 'multipart/form-data';
+       // $form['#attached']['library'][] = 'formmoduleinsp/formmoduleinsplib';
         return $form;
     }
 
