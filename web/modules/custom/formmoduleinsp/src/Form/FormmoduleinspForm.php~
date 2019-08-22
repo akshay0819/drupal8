@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\file\Entity\File;
 use Drupal\customutil\CustomUtils;
 use Drupal\formmoduleinsp\Controller\Formmoduleinsp_biz;
 use Drupal\formmoduleinsp\Controller\AutocompleteController;
@@ -161,16 +162,18 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'range',
                 '#title' => t('Document Status'),
                 '#default_value' => $formmoduleinspdet['docstatus'],
-		'#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled', 'onmouseover' => '$(this).attr("title", this.value);'] : ['onmouseover' => '$(this).attr("title", this.value);'], 
-            	'#prefix' => '<div class="col-md-6">',
+		'#attributes' => ['onmouseover' => '$(this).attr("title", this.value);'], 
+            	'#disabled' => isset($this->display_mode) ? TRUE : FALSE;
+                '#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
 	    $form['compstatus'] = [
                 '#type' => 'range',
                 '#title' => t('Completion Status'),
                 '#default_value' => $formmoduleinspdet['compstatus'],
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'onmouseover' => '$(this).attr("title", this.value);'] : ['onmouseover' => '$(this).attr("title", this.value);'], 
-            	'#prefix' => '<div class="col-md-6">',
+                '#attributes' => ['onmouseover' => '$(this).attr("title", this.value);'], 
+            	'#disabled' => isset($this->display_mode) ? TRUE : FALSE;
+                '#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
 	$options = ['Closed' => 'Closed', 'Open' => 'Open'];
@@ -181,21 +184,25 @@ class FormmoduleinspForm extends FormBase {
             '#default_value' =>$formmoduleinspdet['status'],
             '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
             '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
+            '#suffix' => '</div></div>'
         ];
 	$form['attachment'] = [
-            '#type' => 'file',
+            '#type' => 'managed_file',
             '#title' => t('Attachment'),
             '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+	    '#multiple' => TRUE,
+	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE;
             '#upload_location' => 'public://items',
-	    '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div></div>',
-        ];
+	    '#upload_validators' => array(
+	       'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
+	       'file_validate_size' => array(25600000),
+	     ),
+	];
 	if (!isset($this->display_mode)) {
 	$form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -204,7 +211,7 @@ class FormmoduleinspForm extends FormBase {
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => ($i % 2 == 0) ? '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">' : '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
+            '#prefix' => '<div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
         ];
 	/*$add_formfields = CustomUtils::addButton('formmoduleinsp_example.form', array('appinspformpk' => $appinspformpk), 'medium', 'Add '. $result['appinspformname'] . ' Form');
@@ -233,7 +240,7 @@ class FormmoduleinspForm extends FormBase {
         ];
 
 	$form['#attributes']['enctype'] = 'multipart/form-data';
-       // $form['#attached']['library'][] = 'formmoduleinsp/formmoduleinsplib';
+        $form['#attached']['library'][] = 'formmoduleinsp/formmoduleinsplib';
         return $form;
     }
 

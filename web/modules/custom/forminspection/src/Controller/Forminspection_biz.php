@@ -1,7 +1,6 @@
 <?php
 
 namespace Drupal\forminspection\Controller;
-use Drupal\file\Entity\File;
 
 Class Forminspection_biz {
 
@@ -45,7 +44,7 @@ Class Forminspection_biz {
                     'appinspstatus' => $values['appinspstatus'],
                     'appinspcomments' => $values['appinspcomments'],
                     'appinspfeedback' => $values['appinspfeedback'],
-                    'createdby' => \Drupal::currentUser()->id() 
+                    'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
 	    $validators = array(

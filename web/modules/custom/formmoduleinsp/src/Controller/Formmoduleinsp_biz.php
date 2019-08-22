@@ -1,6 +1,7 @@
 <?php
 
 namespace Drupal\formmoduleinsp\Controller;
+use Drupal\file\Entity\File;
 
 Class Formmoduleinsp_biz {
 
@@ -90,15 +91,17 @@ Class Formmoduleinsp_biz {
                 ))
                 ->condition('appinspdtlpk', $appinspdtlpk, '=')
                 ->execute();
-	$validators = array(
-                'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
-            );
-            $uri = 'public://';
-            if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
-                $file_content = file_get_contents($file->filepath);
-            }
-        
+	$image = $form_state->getValue('attachment');
 
+   if ($image[0]) {
+	foreach ($image as $val) {
+	$file = File::load($val);
+        $file->setPermanent();
+	$file->save();
+	$file_usage = \Drupal::service('file.usage'); 
+	$file_usage->add($file, 'formmoduleinsp', $appinspformpk . '-' . $appinspdtlpk, \Drupal::currentUser()->id());
+	}
+   }
         if (!$update) {
             $transaction->rollback();
         } else {

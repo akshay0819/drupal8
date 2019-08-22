@@ -1,4 +1,4 @@
-.js-form-type-textfield {
+/*.js-form-type-textfield {
 margin: 0 !important;
 }
 .js-form-type-textfield input {
@@ -11,4 +11,18 @@ width: 352px !important;
 details {
 border: 0 none !important;
 color: #464457;
+width: 100%;
+}*/
+#ajax-wrapper, .row+div {
+width: 100%;
+}
+.js-form-managed-file .js-form-type-checkbox {
+   display: inline-block;
+   vertical-align: top;
+}
+.js-form-managed-file .form-checkbox {
+   float: left;
+}
+.js-form-managed-file .form-checkbox+label {
+   padding-top: 0;
 }
