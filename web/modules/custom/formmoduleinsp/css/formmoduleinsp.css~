@@ -17,8 +17,8 @@ width: 100%;
 width: 100%;
 }
 .js-form-managed-file .js-form-type-checkbox {
-   display: inline-block;
-   vertical-align: top;
+   display: table;
+   margin: 0;
 }
 .js-form-managed-file .form-checkbox {
    float: left;
