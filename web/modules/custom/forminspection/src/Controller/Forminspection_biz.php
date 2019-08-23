@@ -47,13 +47,13 @@ Class Forminspection_biz {
                     'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
-	    $validators = array(
+	 /*   $validators = array(
                 'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
             );
             $uri = 'public://';
             if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
                 $file_content = file_get_contents($file->filepath);
-            }
+            }*/
 	for ($i = 0; $i < 100; $i++) {
 		if (empty($form_state->getValue(['field_container',$i,'slno']))) continue;
 		$insertdtl = db_insert('appinspectiondtl')
@@ -101,13 +101,13 @@ Class Forminspection_biz {
                 ))
                 ->condition('appinspformpk', $appinspformpk, '=')
                 ->execute();
-	$validators = array(
+	/*$validators = array(
                 'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
             );
             $uri = 'public://';
             if ($file = file_save_upload('attachment', $validators, $uri . "items/")) {
                 $file_content = file_get_contents($file->filepath);
-            }
+            }*/
         for ($i = 0; $i < 100; $i++) {
 		if (empty($form_state->getValue(['field_container',$i,'slno']))) continue;
 	if (empty($form_state->getValue(['field_container',$i,'appinspdtlpk']))) {
@@ -133,10 +133,7 @@ Class Forminspection_biz {
 		            'checklist' => $form_state->getValue(['field_container',$i,'checklist']),
 		            'evidence' => $form_state->getValue(['field_container',$i,'evidence']),
 		            'comments' => $form_state->getValue(['field_container',$i,'comments']),
-		            'docstatus' => $form_state->getValue(['field_container',$i,'docstatus']),
-		            'compstatus' => $form_state->getValue(['field_container',$i,'compstatus']),
 		            'feedback' => $form_state->getValue(['field_container',$i,'feedback']),
-		            'status' => $form_state->getValue(['field_container',$i,'status'])
 		        ))
 		        ->condition('appinspformpk', $appinspformpk, '=')
 		        ->condition('appinspdtlpk', $form_state->getValue(['field_container',$i,'appinspdtlpk']), '=')
@@ -152,12 +149,28 @@ Class Forminspection_biz {
     }
 
     static function delete_forminspection($appinspformpk) {
+	global $base_url;
         db_delete('appinspectionform')
                 ->condition('appinspformpk', $appinspformpk)
                 ->execute();
         db_delete('appinspectiondtl')
                 ->condition('appinspformpk', $appinspformpk)
                 ->execute();
+	$query = db_select('file_managed', 'a');
+	$query->join('file_usage', 'b', 'b.fid = a.fid');
+        $query->fields('a');
+        $query->condition('b.module', 'formmoduleinsp', '=');
+	$query->condition('b.type', '%' . db_like($appinspformpk.'-') . '%', 'LIKE');
+        $files = $query->execute();
+	foreach ($files as $file) {
+		db_delete('file_usage')
+                ->condition('fid', $file->fid)
+                ->execute();
+		unlink($base_url. '/sites/default/files/items/' . $file->filename);
+		db_delete('file_managed')
+                ->condition('fid', $file->fid)
+                ->execute();
+	}
     }
 
 }
