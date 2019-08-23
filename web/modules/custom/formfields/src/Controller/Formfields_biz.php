@@ -28,6 +28,7 @@ Class Formfields_biz {
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
                     'apmdname' => $values['apmdname'],
+                    'apmdoptions' => $values['apmdoptions'],
                     'createdby' => \Drupal::currentUser()->id()
                 ))
                 ->execute();
@@ -54,6 +55,7 @@ Class Formfields_biz {
                     'apmdlength' => $values['apmdlength'],
                     'apmddesc' => $values['apmddesc'],
                     'apmdname' => $values['apmdname'],
+                    'apmdoptions' => $values['apmdoptions'],
                     'updatedby' => \Drupal::currentUser()->id(),
                     'updatedtime' => date('Y-m-d H:i:s', time())
                 ))

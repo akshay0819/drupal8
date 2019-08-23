@@ -36,11 +36,11 @@ Class FormmoduleController {
 
         $link_options = array('attributes' => array('class' => array('btn btn-xs default btn-editable'),),);
         $link_options_delete = array('attributes' => array('class' => array('btn', 'btn-danger'),),);
+drupal_set_message(print_r($getlist,true));
         foreach ($getlist as $item) {
 	    $r = json_decode($item->appgroupfields, true);
 	    foreach ($r as $key => $value) {
 		if (in_array($key, $headers)) {
-		  if (empty($value)) $value = '';
 		  if (strpos($key, 'date') !== false) $row[] = date('m / d / Y', strtotime($value));
 		  else $row[] = $value;
 		}

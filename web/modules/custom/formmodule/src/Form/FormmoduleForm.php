@@ -124,7 +124,7 @@ class FormmoduleForm extends FormBase {
             '#type' => $ftype[$type],
             '#title' => $this->t($desc),
             '#default_value' => ($form_state->getValue($fld) != false) ? $form_state->getValue($fld) : $values[$fld],
-	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
 	   // '#description' => empty($aplandesc) ? '' : $this->t($aplandesc),
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'

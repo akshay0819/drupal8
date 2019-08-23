@@ -8,12 +8,22 @@
 }
 .js-form-wrapper .col-md-2 {
     -webkit-box-flex: 0;
-    -ms-flex: 0 0 16.66667%;
+    -ms-flex: 0 0 14.66667%;
     flex: 0 0 14.667%;
     max-width: 14.66667%;
 }
+#formmodulelistinsp-example-form .js-form-wrapper .col-md-2 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 13%;
+    flex: 0 0 13%;
+    max-width: 13%;
+}
 #formmodulelistinsp-example-form #js-ajax-elements-wrapper {
-    height: 830px;
+    height: 850px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+#formmodulelistinsp-example-form #js-ajax-elements-wrapper .btn i {
+    padding-right: 0;
 }

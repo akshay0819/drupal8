@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
 use Drupal\customutil\CustomUtils;
 use Drupal\formmoduleinsp\Controller\Formmoduleinsp_biz;
 use Drupal\formmoduleinsp\Controller\AutocompleteController;
@@ -117,7 +118,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Inspection Form Id'),
             '#default_value' =>  $forminspectiondet['appinspformid'],
-	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="row"><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -126,7 +127,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Form Name'),
             '#default_value' => $forminspectiondet['appinspformname'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -135,7 +136,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Auditor'),
             '#default_value' => $forminspectiondet['appinspauditor'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -144,7 +145,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Auditee'),
             '#default_value' => $forminspectiondet['appinspauditee'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -153,7 +154,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'date',
             '#title' => $this->t('Audit Date'),
             '#default_value' => (!empty($forminspectiondet['appauditdate']) ? date('Y-m-d', strtotime($forminspectiondet['appauditdate'])) : date('Y-m-d')),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -163,7 +164,7 @@ class FormmoduleinspListForm extends FormBase {
             '#title' => $this->t('Inspection Status'),
 	    '#options' => $options,
             '#default_value' =>$forminspectiondet['appinspstatus'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -171,7 +172,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'textarea',
             '#title' => $this->t('Auditee Comments'),
             '#default_value' => $forminspectiondet['appinspcomments'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -179,7 +180,7 @@ class FormmoduleinspListForm extends FormBase {
             '#type' => 'textarea',
             '#title' => $this->t('Auditor Feedback'),
             '#default_value' => $forminspectiondet['appinspfeedback'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div></div>'
         ];
@@ -231,7 +232,7 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textfield',
               //  '#title' => t('Sl No'),
                 '#default_value' => isset($details[$delta]->slno) ? $details[$delta]->slno : $delta+1,
-		'#attributes' => array('readonly' => 'readonly'),
+		'#attributes' => ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'],
                 '#prefix' => '<div class="col-md-1 col-sm-10">',
                 '#suffix' => '</div>',
             );
@@ -240,7 +241,7 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('ChapterNo'),
                 '#default_value' => $details[$delta]->chapter,
-		'#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+		'#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
@@ -249,7 +250,7 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Requirements'),
                 '#default_value' => $details[$delta]->requirements,
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
@@ -258,7 +259,7 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Checklist'),
                 '#default_value' => $details[$delta]->checklist,
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
@@ -267,7 +268,7 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Evidence'),
                 '#default_value' => $details[$delta]->evidence,
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
@@ -276,7 +277,7 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Comments'),
                 '#default_value' => $details[$delta]->comments,
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
@@ -285,13 +286,16 @@ class FormmoduleinspListForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Feedback'),
                 '#default_value' => $details[$delta]->feedback,
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-2 col-sm-10">',
                 '#suffix' => '</div>',
             );
 	$curl = Url::fromRoute('formmoduleinsp_example_display', array('appinspformpk' => $appinspformpk, 'appinspdtlpk' => $details[$delta]->appinspdtlpk));
         $curl->setOptions($link_options1);
-        $add_formmoduleinsp = \Drupal::l(t('-'), $curl);
+	$img = "<i class='fa fa-drafting-compass'></i>";
+	$rendered_image = render($img);
+	$image_markup = Markup::create($rendered_image);
+	$add_formmoduleinsp = \Drupal::l($image_markup, $curl);
 
         $form['field_container'][$delta]['submit'] = [
             '#markup' => $add_formmoduleinsp,

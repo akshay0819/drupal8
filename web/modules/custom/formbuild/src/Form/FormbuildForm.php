@@ -104,7 +104,7 @@ class FormbuildForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Template Code'),
             '#default_value' =>  ($form_state->getValue('apmdgroupid') != false)? $form_state->getValue('apmdgroupid') :$formbuilddet['apmdgroupid'],
-	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -113,7 +113,7 @@ class FormbuildForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Template Name'),
             '#default_value' => ($form_state->getValue('apmdgroupname') != false)? $form_state->getValue('apmdgroupname') :$formbuilddet['apmdgroupname'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -123,7 +123,7 @@ class FormbuildForm extends FormBase {
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Fields'),
             '#default_value' => ($form_state->getValue('apmdfields') != false) ? $form_state->getValue('apmdfields') : implode(",", json_decode($formbuilddet['apmdfields'], true)),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [],
 	    '#process' => [
 	      [Textarea::class, 'processAutocomplete'],
 	    ],
@@ -142,7 +142,7 @@ class FormbuildForm extends FormBase {
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Table Fields'),
             '#default_value' => ($form_state->getValue('aptablefields') != false) ? $form_state->getValue('aptablefields') : implode(",", json_decode($formbuilddet['aptablefields'], true)),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#process' => [
 	      [Textarea::class, 'processAutocomplete'],
 	    ],
@@ -161,7 +161,7 @@ class FormbuildForm extends FormBase {
             '#autocomplete_route_name' => 'formbuild_example.autocomplete',
 	    '#title' => $this->t('Template Keys'),
             '#default_value' => ($form_state->getValue('apkeyfields') != false) ? $form_state->getValue('apkeyfields') : implode(",", json_decode($formbuilddet['apkeyfields'], true)),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#process' => [
 	      [Textarea::class, 'processAutocomplete'],
 	    ],

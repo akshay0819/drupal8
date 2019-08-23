@@ -5,7 +5,7 @@ namespace Drupal\formfields\Controller;
 Class Formfields_biz {
 
     static function getformfieldsdet($formbuildpk = NULL) {
-
+	$result = array();
         if (!empty($formbuildpk)) {
             $headerquery = db_select('appmetadata', 'a');
             $headerquery->fields('a');

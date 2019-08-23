@@ -103,7 +103,7 @@ class FormfieldsForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Field Name'),
             '#default_value' =>  ($form_state->getValue('apmdname') != false)? $form_state->getValue('apmdname') :$formfieldsdet['apmdname'],
-	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -113,7 +113,7 @@ class FormfieldsForm extends FormBase {
             '#title' => $this->t('Field Type'),
             '#options' => $types,
             '#default_value' => ($form_state->getValue('apmdtype') != false)? $form_state->getValue('apmdtype') :(isset($this->display_mode) ? $formfieldsdet['apmdtype'] : $formfieldsdet['apmdtype']),
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
 	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
@@ -123,7 +123,7 @@ class FormfieldsForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Field Length'),
             '#default_value' => ($form_state->getValue('apmdlength') != false) ? $form_state->getValue('apmdlength') : $formfieldsdet['apmdlength'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -133,7 +133,15 @@ class FormfieldsForm extends FormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Field Desc'),
             '#default_value' => ($form_state->getValue('apmddesc') != false) ? $form_state->getValue('apmddesc') : $formfieldsdet['apmddesc'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	$form['apmdoptions'] = [
+            '#type' => 'textarea',
+            '#title' => $this->t('Field Options'),
+            '#default_value' => ($form_state->getValue('apmdoptions') != false) ? $form_state->getValue('apmdoptions') : $formfieldsdet['apmdoptions'],
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div>'
         ];
@@ -142,7 +150,7 @@ class FormfieldsForm extends FormBase {
 	$form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -151,7 +159,7 @@ class FormfieldsForm extends FormBase {
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',

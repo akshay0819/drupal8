@@ -17,3 +17,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+#formmodulelistinsp-example-form #js-ajax-elements-wrapper .btn i {
+    padding-right: 0;
+}

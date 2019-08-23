@@ -225,7 +225,7 @@ class FormmoduleForm extends FormBase {
     public function submitForm(array &$form, FormStateInterface $form_state) {
        // $apmdgpk = $form_state->getValue('apmdgpk');
         
-        $vals = $form_state->getValues();
+      //  $vals = $form_state->getValues();
 
         switch ($this->formmode) {
             case 'NEW':
