@@ -163,7 +163,7 @@ class FormmoduleinspForm extends FormBase {
                 '#title' => t('Document Status'),
                 '#default_value' => $formmoduleinspdet['docstatus'],
 		'#attributes' => ['onmouseover' => '$(this).attr("title", this.value);'], 
-            	'#disabled' => isset($this->display_mode) ? TRUE : FALSE;
+            	'#disabled' => isset($this->display_mode) ? TRUE : FALSE,
                 '#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -172,7 +172,7 @@ class FormmoduleinspForm extends FormBase {
                 '#title' => t('Completion Status'),
                 '#default_value' => $formmoduleinspdet['compstatus'],
                 '#attributes' => ['onmouseover' => '$(this).attr("title", this.value);'], 
-            	'#disabled' => isset($this->display_mode) ? TRUE : FALSE;
+            	'#disabled' => isset($this->display_mode) ? TRUE : FALSE,
                 '#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -191,7 +191,7 @@ class FormmoduleinspForm extends FormBase {
             '#title' => t('Attachment'),
             '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
 	    '#multiple' => TRUE,
-	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE;
+	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
             '#upload_location' => 'public://items',
 	    '#upload_validators' => array(
 	       'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
@@ -207,11 +207,22 @@ class FormmoduleinspForm extends FormBase {
         ];
 	}
         else {
+	global $base_url;
+	$query = db_select('file_managed', 'a');
+	$query->join('file_usage', 'b', 'b.fid = a.fid');
+        $query->fields('a');
+        $query->condition('b.type', $appinspformpk.'-'.$appinspdtlpk, '=');
+        $files = $query->execute();
+	$i = 0;
+        foreach($files as $file) {
+	  $form[$i] = ['#markup' => '<div class="col-md-12"><a href="'.$base_url.'/sites/default/files/items/'.$file->filename.'" target="_blank">'.$file->filename.'</a></div>'];
+	  $i++;
+	}
 	$edit_formfields = CustomUtils::addButton('formmoduleinsp_example_edit', array('appinspformpk' => $appinspformpk, 'appinspdtlpk' => $appinspdtlpk), 'medium', 'Edit '. $result['appinspformname'] . ' Form');
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
+            '#prefix' => '<div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
         ];
 	/*$add_formfields = CustomUtils::addButton('formmoduleinsp_example.form', array('appinspformpk' => $appinspformpk), 'medium', 'Add '. $result['appinspformname'] . ' Form');

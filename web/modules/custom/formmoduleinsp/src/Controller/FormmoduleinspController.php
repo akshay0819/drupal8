@@ -140,7 +140,7 @@ Class FormmoduleinspController {
             '#header' => $header,
             '#rows' => $rows,
             '#attributes' => array(
-                'id' => 'kt_table_1',
+                'id' => 'kt_table_2',
                 'class' => "table table-striped- table-bordered table-hover"
             ),
             '#prefix' => '<div class="kt-portlet__body">',

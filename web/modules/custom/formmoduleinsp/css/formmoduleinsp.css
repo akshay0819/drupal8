@@ -14,7 +14,7 @@ color: #464457;
 width: 100%;
 }*/
 #ajax-wrapper, .row+div {
-width: 100%;
+   width: 100%;
 }
 .js-form-managed-file .js-form-type-checkbox {
    display: table;

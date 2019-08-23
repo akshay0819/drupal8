@@ -25,4 +25,5 @@ width: 100%;
 }
 .js-form-managed-file .form-checkbox+label {
    padding-top: 0;
+   white-space: nowrap;
 }

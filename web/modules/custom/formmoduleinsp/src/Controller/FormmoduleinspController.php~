@@ -22,7 +22,7 @@ Class FormmoduleinspController {
             'appinspauditee' => t('Auditee'),
             'appauditdate' => t('Audit Date'),
             'appinspstatus' => t('Status'),
-            'operations' => t('Edit'),
+        //    'operations' => t('Edit'),
         //    'deletecomp' => t('Delete'),
         );
 

@@ -1,5 +1,7 @@
-formmodulelib:
+formmoduleinsplib:
   version: 1.x
   css:
     base:
-      css/formmodule.css: {}
+      css/formmoduleinsp.css: {}
+  js:
+      formmoduleinsp.js

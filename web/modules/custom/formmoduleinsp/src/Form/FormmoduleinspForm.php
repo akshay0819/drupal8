@@ -207,6 +207,17 @@ class FormmoduleinspForm extends FormBase {
         ];
 	}
         else {
+	global $base_url;
+	$query = db_select('file_managed', 'a');
+	$query->join('file_usage', 'b', 'b.fid = a.fid');
+        $query->fields('a');
+        $query->condition('b.type', $appinspformpk.'-'.$appinspdtlpk, '=');
+        $files = $query->execute();
+	$i = 0;
+        foreach($files as $file) {
+	  $form[$i] = ['#markup' => '<div class="col-md-12"><a href="'.$base_url.'/sites/default/files/items/'.$file->filename.'" target="_blank">'.$file->filename.'</a></div>'];
+	  $i++;
+	}
 	$edit_formfields = CustomUtils::addButton('formmoduleinsp_example_edit', array('appinspformpk' => $appinspformpk, 'appinspdtlpk' => $appinspdtlpk), 'medium', 'Edit '. $result['appinspformname'] . ' Form');
 
         $form['actions']['submitedit'] = [
