@@ -31,6 +31,7 @@
         "drush/drush": "^9.6",
         "mpdf/mpdf": "^8.0",
         "phpmailer/phpmailer": "^5.2.21",
+        "stichoza/google-translate-php": "^4.0",
         "swiftmailer/swiftmailer": "5.4.8",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
