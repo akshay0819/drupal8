@@ -9,12 +9,24 @@ use Drupal\Core\Link;
 use Drupal\productmaster\Product_utils;
 use Drupal\productmaster\Product_Biz;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 Class AddProduct extends FormBase {
 
     public $id;
 
     public function buildForm(array $form, FormStateInterface $form_state, $formmode = '', $id = '') {
+$tr = new GoogleTranslate(); // Translates to 'en' from auto-detected language by default
+$tr->setSource('en'); // Translate from English
+echo $tr->translate('Hello World!<br/>');
+
+$tr->setSource(); // Detect language automatically
+$tr->setTarget('ka'); // Translate to Georgian
+echo $tr->translate('Hello World!');
+die();
+//$tr->setSource(); // Detect language automatically
+//$tr->setTarget('ka'); // Translate to Georgian
+
         $this->id = $id;
         $this->formmode = $formmode;
         $display_mode = FALSE;
