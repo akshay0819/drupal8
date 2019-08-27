@@ -40,6 +40,7 @@ class FormmoduleForm extends FormBase {
         }
 
         $formmoduledet = Formmodule_biz::getformmoduledet($apmdgpk, $appformpk);
+	$formmilestone = Formmodule_biz::getformmilestone($apmdgpk, $appformpk);
 
         $query = db_select('appmdgroup', 'a');
         $query->fields('a');
@@ -60,7 +61,7 @@ class FormmoduleForm extends FormBase {
 	$form['submitup'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -69,7 +70,7 @@ class FormmoduleForm extends FormBase {
         
         $form['buttons']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
@@ -101,51 +102,59 @@ class FormmoduleForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>',
+            '#suffix' => '</div></div></div></div>',
         ];
-        
         $getfields = json_decode($result['apmdfields'], true);
 	$values = json_decode($formmoduledet['appgroupfields'],true);
-	$ftype = ['DATE' => 'date', 'CHAR' => 'textfield', 'AUTO' => 'textfield', 'SELECT' => 'select', 'FLOAT' => 'textfield', 'CHECK' => 'checkboxes', 'INT' => 'textfield', 'RADIO' => 'textfield', 'TEXT' => 'textarea'];
-	$i = 0;$j = 0;
-	foreach ($getfields as $fld) {
-	$desc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
-	$type = db_query("SELECT apmdtype from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
-	//$apmdpk = db_query("SELECT apmdpk from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
-	//$aplandesc = db_query("SELECT aplandesc from {appmdlan} WHERE appmdpk = :apmdpk LIMIT 1", array(":apmdpk" => $apmdpk))->fetchField();
-	$options = json_decode(db_query("SELECT apmdoptions from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField(), true);
-	$hdesc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype = 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
-	if (!empty($hdesc)) {
-	   $j++;
-	   $form['h'. $j] = ['#type' => 'details', '#title' => $this->t($hdesc), '#open' => ($j == 1) ? TRUE : FALSE];
-	}
-	else {
-	$form['h'. $j][$fld] = [
-            '#type' => $ftype[$type],
-            '#title' => $this->t($desc),
-            '#default_value' => ($form_state->getValue($fld) != false) ? $form_state->getValue($fld) : $values[$fld],
-	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
-	   // '#description' => empty($aplandesc) ? '' : $this->t($aplandesc),
-            '#prefix' => '<div class="col-md-6">',
-            '#suffix' => '</div>'
+	$form['formcoverstart']['#markup'] = '<div class="kt-portlet">';
+        $form['formbody']['#markup'] = '<div class="kt-portlet__body">';
+        
+        $form['tabs'] = [
+            '#markup' => '',
+            '#prefix' => '<ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand" role="tablist">',
+            '#suffix' => '</ul>',
         ];
-	if ($type == 'DATE') {
-	  //$form['h'. $j][$fld]['#date_date_format'] = 'm / d / Y'; 
-	  $form['h'. $j][$fld]['#default_value'] = !empty($values[$fld]) ? date('Y-m-d', strtotime($values[$fld])) : date('Y-m-d');
-	}
-	if ($type == 'SELECT' || $type == 'RADIO' || $type == 'CHECK') {
-	  if (isset($this->display_mode)) $form['h'. $j][$fld]['#disabled'] = TRUE;
-	  $form['h'. $j][$fld]['#options'] = $options;
-	}
-	}
-	if (empty($hdesc)) $i++;
-	}
+        $form['tabs']['one'] = [
+            '#markup' => '<a class="nav-link active" data-toggle="tab" href="#kt_tabs_2_1">Form</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
+        ];
+        $form['tabs']['two'] = [
+            '#markup' => '<a class="nav-link" data-toggle="tab" href="#kt_tabs_2_2">Milestone</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
+        ];
+        
+        $form['tabscontent'] = [
+//            '#markup' => '',
+            '#prefix' => '<div class="tab-content">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['one'] = [
+//            '#markup' =>  '',
+            '#prefix' => '<div class="tab-pane active" id="kt_tabs_2_1" role="tabpanel">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['two'] = [
+//            '#markup' =>  '',
+            '#prefix' => '<div class="tab-pane" id="kt_tabs_2_2" role="tabpanel">',
+            '#suffix' => '</div>',
+        ];
+        
+
+        $form['tabscontent']['one']['productinfo1'] = $this->formmoduletab($getfields, $values, $form_state);
+        $form['tabscontent']['two']['productinfo2'] = $this->milestonetab($formmilestone);
+        $form['formbodyend']['#markup'] = '</div>';
+        $form['formcoverend']['#markup'] = '</div>';
+
+        
 	if (!isset($this->display_mode)) {
 	$form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => ($i % 2 == 0) ? '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">' : '<div class="col-md-6"></div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
-            '#suffix' => '</div>'
+            '#prefix' => ($i % 2 == 0) ? '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">' : '<div class="row"><div class="col-md-6"></div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#suffix' => '</div>',
+	    '#attributes' => ['style' => 'margin-left: 23px;']
         ];
 	}
         else {
@@ -153,7 +162,7 @@ class FormmoduleForm extends FormBase {
 
         $form['actions']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => ($i % 2 == 0) ? '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">' : '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
+            '#prefix' => ($i % 2 == 0) ? '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">' : '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
         ];
 	$add_formfields = CustomUtils::addButton('formmodule_example.form', array('apmdgpk' => $apmdgpk), 'medium', 'Add '. $result['apmdgroupname'] . ' Form');
@@ -175,17 +184,79 @@ class FormmoduleForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>',
+            '#suffix' => '</div></div></div></div>',
         ];
-        $form['formbodyend'] = [
+        $form['formend'] = [
             '#markup' => '</form></div></div>'
         ];
 
 
+        $form['#attributes']['enctype'] = 'multipart/form-data';
         $form['#attached']['library'][] = 'formmodule/formmodulelib';
         return $form;
     }
+    public function formmoduletab($getfields, $values, $form_state) {
+	$ftype = ['DATE' => 'date', 'CHAR' => 'textfield', 'AUTO' => 'textfield', 'SELECT' => 'select', 'FLOAT' => 'textfield', 'CHECK' => 'checkboxes', 'INT' => 'textfield', 'RADIO' => 'textfield', 'TEXT' => 'textarea'];
+	$i = 0;$j = 0;
+	foreach ($getfields as $fld) {
+	$desc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	$type = db_query("SELECT apmdtype from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	//$apmdpk = db_query("SELECT apmdpk from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	//$aplandesc = db_query("SELECT aplandesc from {appmdlan} WHERE appmdpk = :apmdpk LIMIT 1", array(":apmdpk" => $apmdpk))->fetchField();
+	$options = json_decode(db_query("SELECT apmdoptions from {appmetadata} WHERE apmdname = :apmdname AND apmdtype <> 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField(), true);
+	$hdesc = db_query("SELECT apmddesc from {appmetadata} WHERE apmdname = :apmdname AND apmdtype = 'HEAD' LIMIT 1", array(":apmdname" => $fld))->fetchField();
+	if (!empty($hdesc)) {
+	   $j++;
+	   $form['h'. $j] = ['#type' => 'details', '#title' => $this->t($hdesc), '#open' => ($j == 1) ? TRUE : FALSE];
+	}
+	else {
+	$form['h'. $j][$fld] = [
+            '#type' => $ftype[$type],
+            '#title' => $this->t($desc),
+            '#default_value' => ($form_state->getValue($fld) != false) ? $form_state->getValue($fld) : $values[$fld],
+	    '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
+	   // '#description' => empty($aplandesc) ? '' : $this->t($aplandesc),
+            '#prefix' => '<div class="col-md-6">',
+            '#suffix' => '</div>'
+        ];
+	if ($type == 'DATE') {
+	  //$form['h'. $j][$fld]['#date_date_format'] = 'm / d / Y'; 
+	  $form['h'. $j][$fld]['#default_value'] = !empty($values[$fld]) ? date('Y-m-d', strtotime($values[$fld])) : date('Y-m-d');
+	}
+	if ($type == 'SELECT' || $type == 'RADIO' || $type == 'CHECK') {
+	  if (isset($this->display_mode)) $form['h'. $j][$fld]['#disabled'] = TRUE;
+	  $form['h'. $j][$fld]['#options'] = $options;
+	}
+	}
+	if (empty($hdesc)) $i++;
+	}
+	return $form;
+    }
+    public function milestonetab($apmdgpk, $appformpk) {
+	$form['milestonedesc'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Milestone Desc'),
+                '#default_value' => isset($formmilestone['milestonedesc']) ? $formmilestone['milestonedesc'] : '',
+		'#attributes' => isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : '',
+                '#prefix' => '<div class="row"><div class="col-md-12 col-sm-10">',
+                '#suffix' => '</div></div>',
+            );
 
+        $form['attachment'] = [
+            '#type' => 'managed_file',
+            '#title' => t('Attachment'),
+            '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+	    '#multiple' => TRUE,
+	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
+            '#upload_location' => 'public://items',
+	    '#upload_validators' => array(
+	       'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff'),
+	       'file_validate_size' => array(25600000),
+	     ),
+	   // '#suffix' => '</div>'
+	];
+	return $form;
+    }
     public function validateForm(array &$form, FormStateInterface $form_state) {
  	/*if ($form_state->getValue('apmdgroupid') == '') {
             $form_state->setErrorByName('apmdgroupid', $this->t('Please enter proper value'));

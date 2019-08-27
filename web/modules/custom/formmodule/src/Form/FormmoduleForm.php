@@ -40,6 +40,7 @@ class FormmoduleForm extends FormBase {
         }
 
         $formmoduledet = Formmodule_biz::getformmoduledet($apmdgpk, $appformpk);
+	$formmilestone = Formmodule_biz::getformmilestone($apmdgpk, $appformpk);
 
         $query = db_select('appmdgroup', 'a');
         $query->fields('a');
@@ -60,7 +61,7 @@ class FormmoduleForm extends FormBase {
 	$form['submitup'] = [
             '#type' => 'submit',
             '#value' => $this->t('Submit'),
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
             '#suffix' => '</div>'
         ];
 	}
@@ -69,7 +70,7 @@ class FormmoduleForm extends FormBase {
         
         $form['buttons']['submitedit'] = [
             '#markup' => $edit_formfields,
-            '#prefix' => '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
+            '#prefix' => '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
             '#suffix' => '</div></div></div>&nbsp;&nbsp;',
@@ -101,11 +102,100 @@ class FormmoduleForm extends FormBase {
             '#prefix' => '<div class="kt-portlet__head-toolbar">
                                         <div class="kt-portlet__head-wrapper">
                                             <div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>',
+            '#suffix' => '</div></div></div></div>',
         ];
-        
         $getfields = json_decode($result['apmdfields'], true);
 	$values = json_decode($formmoduledet['appgroupfields'],true);
+	$form['formcoverstart']['#markup'] = '<div class="kt-portlet">';
+        $form['formbody']['#markup'] = '<div class="kt-portlet__body">';
+        
+        $form['tabs'] = [
+            '#markup' => '',
+            '#prefix' => '<ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand" role="tablist">',
+            '#suffix' => '</ul>',
+        ];
+        $form['tabs']['one'] = [
+            '#markup' => '<a class="nav-link active" data-toggle="tab" href="#kt_tabs_2_1">Form</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
+        ];
+        $form['tabs']['two'] = [
+            '#markup' => '<a class="nav-link" data-toggle="tab" href="#kt_tabs_2_2">Milestone</a>',
+            '#prefix' => '<li class="nav-item">',
+            '#suffix' => '</li>',
+        ];
+        
+        $form['tabscontent'] = [
+//            '#markup' => '',
+            '#prefix' => '<div class="tab-content">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['one'] = [
+//            '#markup' =>  '',
+            '#prefix' => '<div class="tab-pane active" id="kt_tabs_2_1" role="tabpanel">',
+            '#suffix' => '</div>',
+        ];
+        $form['tabscontent']['two'] = [
+//            '#markup' =>  '',
+            '#prefix' => '<div class="tab-pane" id="kt_tabs_2_2" role="tabpanel">',
+            '#suffix' => '</div>',
+        ];
+        
+
+        $form['tabscontent']['one']['productinfo1'] = $this->formmoduletab($getfields, $values, $form_state);
+        $form['tabscontent']['two']['productinfo2'] = $this->milestonetab($formmilestone);
+        $form['formbodyend']['#markup'] = '</div>';
+        $form['formcoverend']['#markup'] = '</div>';
+
+        
+	if (!isset($this->display_mode)) {
+	$form['submit'] = [
+            '#type' => 'submit',
+            '#value' => $this->t('Submit'),
+            '#prefix' => ($i % 2 == 0) ? '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">' : '<div class="row"><div class="col-md-6"></div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
+            '#suffix' => '</div>',
+	    '#attributes' => ['style' => 'margin-left: 23px;']
+        ];
+	}
+        else {
+	$edit_formfields = CustomUtils::addButton('formmodule_example_edit', array('apmdgpk' => $apmdgpk, 'appformpk' => $appformpk), 'medium', 'Edit '. $result['apmdgroupname'] . ' Form');
+
+        $form['actions']['submitedit'] = [
+            '#markup' => $edit_formfields,
+            '#prefix' => ($i % 2 == 0) ? '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">' : '<div class="row"><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
+            '#suffix' => '</div></div></div>&nbsp;&nbsp;',
+        ];
+	$add_formfields = CustomUtils::addButton('formmodule_example.form', array('apmdgpk' => $apmdgpk), 'medium', 'Add '. $result['apmdgroupname'] . ' Form');
+
+        $form['actions']['submitadd'] = [
+            '#markup' => $add_formfields,
+            '#prefix' => '<div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-wrapper">
+                                            <div class="kt-portlet__head-actions">',
+            '#suffix' => '</div></div></div>&nbsp;&nbsp;',
+        ];
+	}
+        $url = Url::fromRoute('formmodule_example.list', array('apmdgpk' => $apmdgpk));
+        $url->setOptions($link_options);
+        $cancel_formmodulelink = \Drupal::l(t('Cancel'), $url);
+
+        $form['actions']['cancel'] = [
+            '#markup' => $cancel_formmodulelink,
+            '#prefix' => '<div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-wrapper">
+                                            <div class="kt-portlet__head-actions">',
+            '#suffix' => '</div></div></div></div>',
+        ];
+        $form['formend'] = [
+            '#markup' => '</form></div></div>'
+        ];
+
+
+        $form['#attributes']['enctype'] = 'multipart/form-data';
+        $form['#attached']['library'][] = 'formmodule/formmodulelib';
+        return $form;
+    }
+    public function formmoduletab($getfields, $values, $form_state) {
 	$ftype = ['DATE' => 'date', 'CHAR' => 'textfield', 'AUTO' => 'textfield', 'SELECT' => 'select', 'FLOAT' => 'textfield', 'CHECK' => 'checkboxes', 'INT' => 'textfield', 'RADIO' => 'textfield', 'TEXT' => 'textarea'];
 	$i = 0;$j = 0;
 	foreach ($getfields as $fld) {
@@ -140,52 +230,33 @@ class FormmoduleForm extends FormBase {
 	}
 	if (empty($hdesc)) $i++;
 	}
-	if (!isset($this->display_mode)) {
-	$form['submit'] = [
-            '#type' => 'submit',
-            '#value' => $this->t('Submit'),
-            '#prefix' => ($i % 2 == 0) ? '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">' : '<div class="col-md-6"></div><div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6">',
-            '#suffix' => '</div>'
-        ];
-	}
-        else {
-	$edit_formfields = CustomUtils::addButton('formmodule_example_edit', array('apmdgpk' => $apmdgpk, 'appformpk' => $appformpk), 'medium', 'Edit '. $result['apmdgroupname'] . ' Form');
-
-        $form['actions']['submitedit'] = [
-            '#markup' => $edit_formfields,
-            '#prefix' => ($i % 2 == 0) ? '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">' : '<div class="col-md-6">&nbsp;</div><div class="col-md-6">&nbsp;</div><div class="col-md-6"></div><div class="kt-portlet__head-toolbar"><div class="kt-portlet__head-wrapper"><div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>&nbsp;&nbsp;',
-        ];
-	$add_formfields = CustomUtils::addButton('formmodule_example.form', array('apmdgpk' => $apmdgpk), 'medium', 'Add '. $result['apmdgroupname'] . ' Form');
-
-        $form['actions']['submitadd'] = [
-            '#markup' => $add_formfields,
-            '#prefix' => '<div class="kt-portlet__head-toolbar">
-                                        <div class="kt-portlet__head-wrapper">
-                                            <div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>&nbsp;&nbsp;',
-        ];
-	}
-        $url = Url::fromRoute('formmodule_example.list', array('apmdgpk' => $apmdgpk));
-        $url->setOptions($link_options);
-        $cancel_formmodulelink = \Drupal::l(t('Cancel'), $url);
-
-        $form['actions']['cancel'] = [
-            '#markup' => $cancel_formmodulelink,
-            '#prefix' => '<div class="kt-portlet__head-toolbar">
-                                        <div class="kt-portlet__head-wrapper">
-                                            <div class="kt-portlet__head-actions">',
-            '#suffix' => '</div></div></div>',
-        ];
-        $form['formbodyend'] = [
-            '#markup' => '</form></div></div>'
-        ];
-
-
-        $form['#attached']['library'][] = 'formmodule/formmodulelib';
-        return $form;
+	return $form;
     }
+    public function milestonetab($apmdgpk, $appformpk) {
+	$form['milestonedesc'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Milestone Desc'),
+                '#default_value' => isset($formmilestone['milestonedesc']) ? $formmilestone['milestonedesc'] : '',
+		'#attributes' => isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : '',
+                '#prefix' => '<div class="row"><div class="col-md-12 col-sm-10">',
+                '#suffix' => '</div></div>',
+            );
 
+        $form['attachment'] = [
+            '#type' => 'managed_file',
+            '#title' => t('Attachment'),
+            '#attributes' =>  isset($this->display_mode) ? ['disabled' => 'disabled'] : [], 
+	    '#multiple' => TRUE,
+	    '#disabled' => isset($this->display_mode) ? TRUE : FALSE,
+            '#upload_location' => 'public://items',
+	    '#upload_validators' => array(
+	       'file_validate_extensions' => array('pdf doc docx rtf txt xls xlsx csv bmp jpg jpeg png gif tiff mp3'),
+	       'file_validate_size' => array(25600000),
+	     ),
+	   // '#suffix' => '</div>'
+	];
+	return $form;
+    }
     public function validateForm(array &$form, FormStateInterface $form_state) {
  	/*if ($form_state->getValue('apmdgroupid') == '') {
             $form_state->setErrorByName('apmdgroupid', $this->t('Please enter proper value'));

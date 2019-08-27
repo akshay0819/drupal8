@@ -17,6 +17,20 @@ Class Formmodule_biz {
 
         return $result;
     }
+
+    static function getformmilestone($apmdgpk = NULL, $appformpk = NULL) {
+	$result = array();
+        if (!empty($apmdgpk)) {
+            $headerquery = db_select('appmilestone', 'a');
+            $headerquery->fields('a');
+            $headerquery->condition('bopk', $appformpk, '=');
+            $headerquery->condition('botype', 'formmodule', '=');
+            $result = $headerquery->execute()->fetchAssoc();
+
+        }
+
+        return $result;
+    }
     
     static function save_formmodule($form, $form_state, $apmdgpk = '', $apmdgroupname = '') {
         $values = $form_state->getValues();

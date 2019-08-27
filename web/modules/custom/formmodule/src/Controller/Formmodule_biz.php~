@@ -5,12 +5,26 @@ namespace Drupal\formmodule\Controller;
 Class Formmodule_biz {
 
     static function getformmoduledet($apmdgpk = NULL, $appformpk = NULL) {
-
+	$result = array();
         if (!empty($apmdgpk)) {
             $headerquery = db_select('appform', 'a');
             $headerquery->fields('a');
             $headerquery->condition('appformid', $apmdgpk, '=');
             $headerquery->condition('appformpk', $appformpk, '=');
+            $result = $headerquery->execute()->fetchAssoc();
+
+        }
+
+        return $result;
+    }
+
+    static function getformmilestone($apmdgpk = NULL, $appformpk = NULL) {
+	$result = array();
+        if (!empty($apmdgpk)) {
+            $headerquery = db_select('appmilestone', 'a');
+            $headerquery->fields('a');
+            $headerquery->condition('module', $apmdgpk, '=');
+            $headerquery->condition('type', $appformpk, '=');
             $result = $headerquery->execute()->fetchAssoc();
 
         }
