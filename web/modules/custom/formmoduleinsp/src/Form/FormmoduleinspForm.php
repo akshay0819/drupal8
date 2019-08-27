@@ -208,10 +208,9 @@ class FormmoduleinspForm extends FormBase {
 	}
         else {
 	global $base_url;
-	$query = db_select('file_managed', 'a');
-	$query->join('file_usage', 'b', 'b.fid = a.fid');
-        $query->fields('a');
-        $query->condition('b.type', $appinspformpk.'-'.$appinspdtlpk, '=');
+	$query = db_select('appattachment', 'a');
+	$query->fields('a');
+        $query->condition('type', $appinspformpk.'-'.$appinspdtlpk, '=');
         $files = $query->execute();
 	$i = 0;
         foreach($files as $file) {

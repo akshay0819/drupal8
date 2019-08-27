@@ -109,7 +109,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Chapter No'),
                 '#default_value' => $formmoduleinspdet['chapter'],
-		'#attributes' =>  ['readonly' => 'readonly'], 
+		'#attributes' =>  ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'], 
             	'#prefix' => '<div class="row"><div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -118,7 +118,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Requirements'),
                 '#default_value' =>$formmoduleinspdet['requirements'],
-                '#attributes' =>  ['readonly' => 'readonly'], 
+                '#attributes' =>  ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -127,7 +127,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Checklist'),
                 '#default_value' => $formmoduleinspdet['checklist'],
-                '#attributes' =>  ['readonly' => 'readonly'], 
+                '#attributes' =>  ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -136,7 +136,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Evidence'),
                 '#default_value' => $formmoduleinspdet['evidence'],
-                '#attributes' =>  ['readonly' => 'readonly'], 
+                '#attributes' =>  ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -145,7 +145,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Comments'),
                 '#default_value' => $formmoduleinspdet['comments'],
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -154,7 +154,7 @@ class FormmoduleinspForm extends FormBase {
                 '#type' => 'textarea',
                 '#title' => t('Feedback'),
                 '#default_value' => $formmoduleinspdet['feedback'],
-                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+                '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             	'#prefix' => '<div class="col-md-6">',
                 '#suffix' => '</div>',
             ];
@@ -182,7 +182,7 @@ class FormmoduleinspForm extends FormBase {
             '#title' => $this->t('Status'),
 	    '#options' => $options,
             '#default_value' =>$formmoduleinspdet['status'],
-            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly'] : [], 
+            '#attributes' =>  isset($this->display_mode) ? ['readonly' => 'readonly', 'style' => 'background:#F2F3F8;'] : [], 
             '#prefix' => '<div class="col-md-6">',
             '#suffix' => '</div></div>'
         ];

@@ -76,7 +76,7 @@
                     {{ page }}
                     {{ page_bottom }}
                     {#                    </div><!-- ./wrapper -->#}
-                
+                <js-bottom-placeholder token="{{ placeholder_token|raw }}">
 <script>
                                                 var KTAppOptions = {
                                                     "colors": {

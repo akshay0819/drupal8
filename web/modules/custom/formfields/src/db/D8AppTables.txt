@@ -1,0 +1,183 @@
+delimiter $$
+
+CREATE TABLE `appmetadata` (
+  `apmdpk`      int(11) NOT NULL AUTO_INCREMENT COMMENT 'app meta data pk',
+  `apmdname`    varchar(40) NOT NULL COMMENT 'Metadata Name',
+  `apmdtype`    varchar(10) NULL COMMENT 'Metadata Type',
+  `apmdlength`  varchar(10) NOT NULL COMMENT 'Metadata Length',
+  `apmddesc`    varchar(100) NOT NULL COMMENT 'Metadata Desc',
+  `createdby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `updatedtime` datetime,
+  `latitude`    double,
+  `longitude`   double,      
+  `tenant`      varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`apmdpk`),
+  UNIQUE KEY `apmdname` (`apmdname`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+CREATE
+TRIGGER `appmetadata_BEFORE_INSERT`
+BEFORE INSERT ON `appmetadata`
+FOR EACH ROW
+BEGIN
+set new.tenant = SUBSTRING_INDEX(USER(),'@',1);
+END
+$$
+ALTER TABLE `appmetadata` ADD COLUMN `apmdoptions` json NULL  AFTER `apmddesc` ;
+ALTER TABLE `appmetadata` ADD COLUMN `module` VARCHAR(40) NULL DEFAULT NULL  AFTER `apmdoptions` , ADD COLUMN `form` VARCHAR(40) NULL DEFAULT NULL  AFTER `module` ;
+
+CREATE TABLE `appmdgroup` (
+  `apmdgpk`      int(11) NOT NULL AUTO_INCREMENT COMMENT 'app meta data group pk',
+  `apmdgroupid`    varchar(40) NOT NULL COMMENT 'Metadata Group ID',
+  `apmdgroupname`    varchar(100) NOT NULL COMMENT 'Metadata Group Name',
+  `apmdfields`   json NULL COMMENT 'Metadata Fields',
+  `aptablefields`   json NULL COMMENT 'Data table Fields',
+  `apkeyfields`   json NULL COMMENT 'Form Key Fields',
+  `createdby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `updatedtime` datetime,
+  `latitude`    double,
+  `longitude`   double,  
+  `tenant`      varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`apmdgpk`),
+  UNIQUE KEY `apmdgroupid` (`apmdgroupid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `appmdgroup` ADD COLUMN `singleline` VARCHAR(10) NULL  AFTER `apkeyfields` ;
+ALTER TABLE `appmdgroup` ADD COLUMN `grouptype` VARCHAR(40) NULL DEFAULT NULL  AFTER `singleline` ;
+
+
+CREATE TABLE `appform` (
+  `appformpk`      int(11) NOT NULL AUTO_INCREMENT COMMENT 'Formpk',        
+  `appformid`        varchar(40) NOT NULL COMMENT 'Form id',
+  `appgroupname`    varchar(40) NULL COMMENT 'Group Name',
+  `appgroupfields`  json COMMENT 'Group Field values',
+  `appformstatus`    varchar(40) NULL COMMENT 'Form Status',
+  `appformcomments`  varchar(255) NULL COMMENT 'Form Comments',
+  `createdby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `updatedtime` datetime,
+  `latitude`    double,
+  `longitude`   double,  
+  `tenant`      varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`appformpk`),
+  UNIQUE KEY `appformpk` (`appformpk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `appform` 
+DROP INDEX `appformid` 
+, ADD UNIQUE INDEX `appformpk` (`appformpk` ASC) ;
+
+ALTER TABLE `appform` CHANGE COLUMN `appformid` `appformid` INT(11) NOT NULL COMMENT 'Form id'  ;
+
+CREATE TABLE `appmdlan` (
+  `applanpk`      int(11) NOT NULL AUTO_INCREMENT COMMENT 'app meta data pk',
+  `appmdpk`      int(11) NOT NULL COMMENT 'app meta data pk',
+  `lang`    varchar(40) NOT NULL COMMENT 'Metadata Name',
+  `type`    varchar(10) NULL COMMENT 'Label- tool - tip',
+  `aplandesc`  varchar(100) NOT NULL COMMENT 'Desc in native language',
+  `createdby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `updatedtime` datetime,
+  `latitude`    double,
+  `longitude`   double,  
+  `tenant`      varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`applanpk`),
+  UNIQUE KEY (`applanpk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `appformfeedback` (
+  `appformfeedbkpk`   int(11) NOT NULL AUTO_INCREMENT COMMENT 'Form Feedback pk',        
+  `appformid`    varchar(40) NOT NULL COMMENT 'Form id',
+  `feedbacktype` varchar(10) NOT NULL COMMENT 'Audit-Inspection',
+  `feedbackdate` datetime NOT NULL COMMENT 'Date and time of feedback',
+  `appgroupname`    varchar(40) NULL COMMENT 'Group Name',
+  `appfeedback`  json COMMENT 'Feedback for each field',
+  `appformcomments`  varchar(255) NULL COMMENT 'Form Comments',
+  `createdby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedby`   int(11) DEFAULT NULL COMMENT 'System User name',
+  `updatedtime` datetime,
+  `latitude`    double,
+  `longitude`   double, 
+  `tenant`      varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`appformfeedbkpk`),
+  UNIQUE KEY `appformfeedbkpk` (`appformfeedbkpk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `appinspectionform` (
+  `appinspformpk` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Inspection Formpk',
+  `appinspformid` varchar(40) NOT NULL COMMENT 'Inspection Form id',
+  `appinspformname` varchar(100) DEFAULT NULL COMMENT 'Form Name',
+  `appinspauditor` varchar(40) DEFAULT NULL COMMENT 'Auditee User',
+  `appinspauditee` varchar(40) DEFAULT NULL COMMENT 'Audited User',
+  `appauditdate`  datetime not null COMMENT 'Audit Date',
+  `appinspstatus` varchar(40) DEFAULT NULL COMMENT 'Inspection Status',
+  `appinspcomments` varchar(255) DEFAULT NULL COMMENT 'Auditee Comments',
+  `appinspfeedback` varchar(255) DEFAULT NULL COMMENT 'Auditor Feedback',
+  `createdby` int(11) DEFAULT NULL COMMENT 'System User name',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedby` int(11) DEFAULT NULL COMMENT 'System User name',
+  `updatedtime` datetime DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `tenant` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`appinspformpk`),
+  UNIQUE KEY `appinspformid` (`appinspformid`, `appinspformpk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `appinspectionform` ADD COLUMN `batch` VARCHAR(40) NULL  AFTER `appinspfeedback` , ADD COLUMN `location` VARCHAR(40) NULL  AFTER `batch` ;
+
+CREATE TABLE `appinspectiondtl` (
+  `appinspdtlpk` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Inspection Formpk',
+  `appinspformpk` int(11) NOT NULL COMMENT 'Inspection Formpk',
+  `slno` int(11) NOT NULL COMMENT 'slno',
+  `chapter` varchar(1000) NOT NULL COMMENT 'Chapterno',
+  `requirements` varchar(1000) COMMENT 'Requirements',
+  `checklist` varchar(6000) COMMENT 'Checklists',
+  `evidence` varchar(1000) COMMENT 'Evidence',
+  `comments` varchar(1000) COMMENT 'Comments',
+  `docstatus` int(11) COMMENT 'Document Status',
+  `compstatus` int(11) COMMENT 'Completion Status',
+  `feedback`    varchar(1000) COMMENT 'Feedback from Auditor',
+  `status`    varchar(10) COMMENT 'Closed-Open',
+  `tenant` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`appinspdtlpk`),
+  UNIQUE KEY `appinspformpk` (`appinspformpk`, `appinspdtlpk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `appattachment` (
+  `appattachmentpk` int(11) NOT NULL AUTO_INCREMENT COMMENT 'appattachmentpk',
+  `fid` int(11) NOT NULL COMMENT 'fid',
+  `uid` int(11) NOT NULL COMMENT 'slno',
+  `filename` varchar(255) NOT NULL COMMENT 'filename',
+  `uri` varchar(255) COMMENT 'uri',
+  `filemime` varchar(255) COMMENT 'filemime',
+  `module` varchar(64) COMMENT 'module',
+  `type` varchar(64) COMMENT 'type',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tenant` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`appattachmentpk`),
+  UNIQUE KEY `fid` (`fid`, `appattachmentpk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `appmilestone` (
+  `appmilestonepk` int(11) NOT NULL AUTO_INCREMENT COMMENT 'appmilestonepk',
+  `datetime` datetime,
+  `milestonedesc` varchar(255) NOT NULL COMMENT 'milestonedesc',
+  `filename` varchar(255) COMMENT 'filename',
+  `uri` varchar(255) COMMENT 'uri',
+  `filemime` varchar(255) COMMENT 'filemime',
+  `bopk` int(11) COMMENT 'bopk',
+  `botype` varchar(64) COMMENT 'botype',
+  `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tenant` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`appmilestonepk`),
+  UNIQUE KEY `milestonedesc` (`milestonedesc`, `appmilestonepk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

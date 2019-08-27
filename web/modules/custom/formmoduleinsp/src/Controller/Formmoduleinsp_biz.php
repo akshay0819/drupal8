@@ -78,7 +78,7 @@ Class Formmoduleinsp_biz {
         $transaction = db_transaction();
 
         $update = db_update('appinspectiondtl')
-                ->fields(array(
+                ->fields([
                     'chapter' => $values['chapter'],
                     'requirements' => $values['requirements'],
                     'checklist' => $values['checklist'],
@@ -88,7 +88,7 @@ Class Formmoduleinsp_biz {
                     'compstatus' => $values['compstatus'],
                     'feedback' => $values['feedback'],
                     'status' => $values['status']
-                ))
+                ])
                 ->condition('appinspdtlpk', $appinspdtlpk, '=')
                 ->execute();
 	$image = $form_state->getValue('attachment');
@@ -100,6 +100,26 @@ Class Formmoduleinsp_biz {
 	$file->save();
 	$file_usage = \Drupal::service('file.usage'); 
 	$file_usage->add($file, 'formmoduleinsp', $appinspformpk . '-' . $appinspdtlpk, \Drupal::currentUser()->id());
+	$query = db_select('file_managed', 'a');
+	$query->join('file_usage', 'b', 'b.fid = a.fid');
+        $query->fields('a');
+        $query->fields('b');
+        $query->condition('b.type', $appinspformpk.'-'.$appinspdtlpk, '=');
+        $query->orderBy('a.fid', 'DESC');
+        $query->range(0, 1);
+        $attach = $query->execute()->fetchAssoc();
+	
+	$insertid = db_insert('appattachment')
+                ->fields([
+                    'fid' => $attach['fid'],
+                    'uid' => $attach['uid'],
+                    'filename' => $attach['filename'],
+                    'filemime' => $attach['filemime'],
+                    'uri' => $attach['uri'],
+                    'module' => $attach['module'],
+                    'type' => $attach['type']
+                ])
+                ->execute();
 	}
    }
         if (!$update) {

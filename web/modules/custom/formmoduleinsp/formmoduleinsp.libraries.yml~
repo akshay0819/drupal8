@@ -3,5 +3,8 @@ formmoduleinsplib:
   css:
     base:
       css/formmoduleinsp.css: {}
+      css/ion.rangeSlider.css: 
+      css/ion.rangeSlider.skinFlat.css : {}
   js:
-      formmoduleinsp.js
+    js/ion.rangeSlider.min.js
+    js/components-ion-sliders.min.js
